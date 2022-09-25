@@ -15,11 +15,11 @@
 
     // Le 
     wire [{{ module.interconnect_pairs_count * 4 + module.cluster_size - 1}}:0] w_inputs_for_les = { {%- for sside in ("north", "east", "south", "west") %}data_{{ sside }}_in, {% endfor %}data_from_les};
-    {% for i in range(module.cluster_size) %}    
-    Multiplexer{{ module.interconnect_pairs_count * 4 + module.cluster_size }} mux_le{{ i }}(
+    {% for c in range(module.cluster_size) %}{% for i in range(module.lut_size) %}
+    Multiplexer{{ module.interconnect_pairs_count * 4 + module.cluster_size }} mux_le{{ c }}_i{{ i }}(
         .data_in(w_inputs_for_les),
-        .data_out(data_to_les[{{ i }}]),
-        .config_in(c_mux_le{{ i }})
+        .data_out(data_to_les[{{ c * module.lut_size + i }}]),
+        .config_in(c_mux_le{{ c }}_i{{ i}})
     );
-    {% endfor %}
+    {% endfor %}{% endfor%}
 {% endblock  %}

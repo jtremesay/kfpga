@@ -273,6 +273,7 @@ class SwitchBoxModule(Module):
         super().__init__("SwitchBox", library)
         self.interconnect_pairs_count = interconnect_pairs_count
         self.cluster_size = cluster_size
+        self.lut_size = lut_size
 
         for side in ("north", "east", "south", "west"):
             self.add_data_input(
