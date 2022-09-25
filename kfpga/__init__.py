@@ -298,14 +298,11 @@ class SwitchBoxModule(Module):
         mux_le = library.get_module(
             "Multiplexer{}".format(interconnect_pairs_count * 4 + cluster_size)
         )
-        for i in range(cluster_size):
-            self.add_config("mux_le{}".format(i), mux_le.config.width)
-
-    def template_ctx(self) -> Mapping[str, Any]:
-        ctx = super().template_ctx()
-        ctx["interconnect_pairs_count"] = self.interconnect_pairs_count
-
-        return ctx
+        for c in range(cluster_size):
+            for i in range(lut_size):
+                self.add_config(
+                    "mux_le{}_i{}".format(c, i), mux_le.config.width
+                )
 
 
 class LogicTileModule(Module):
@@ -354,13 +351,6 @@ class LogicTileModule(Module):
         sb = library.get_module("SwitchBox")
         self.add_config("switchbox", sb.config.width)
 
-    def template_ctx(self) -> Mapping[str, Any]:
-        ctx = super().template_ctx()
-        ctx["cluster_size"] = self.cluster_size
-        ctx["lut_size"] = self.lut_size
-
-        return ctx
-
 
 class LogicColumnModule(Module):
     def __init__(
@@ -401,13 +391,6 @@ class LogicColumnModule(Module):
         tile = library.get_module("LogicTile")
         for y in range(height):
             self.add_config("tile{}".format(y), tile.config.width)
-
-    def template_ctx(self) -> Mapping[str, Any]:
-        ctx = super().template_ctx()
-        ctx["height"] = self.height
-        ctx["interconnect_pairs_count"] = self.interconnect_pairs_count
-
-        return ctx
 
 
 class LogicGridModule(Module):
@@ -458,14 +441,6 @@ class LogicGridModule(Module):
         column = library.get_module("LogicColumn")
         for x in range(width):
             self.add_config("column{}".format(x), column.config.width)
-
-    def template_ctx(self) -> Mapping[str, Any]:
-        ctx = super().template_ctx()
-        ctx["width"] = self.width
-        ctx["height"] = self.height
-        ctx["interconnect_pairs_count"] = self.interconnect_pairs_count
-
-        return ctx
 
 
 class IOTileModule(Module):
