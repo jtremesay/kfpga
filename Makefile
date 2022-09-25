@@ -16,7 +16,7 @@ verilog_files ?= \
 	rtl/$(target_core)/IOLine.v \
 	rtl/$(target_core)/IOColumn.v \
 	rtl/$(target_core)/kFPGACore.v \
-	rtl/$(target_core)/ShiftRegister34688.v \
+	rtl/$(target_core)/ShiftRegister42368.v \
 	rtl/$(target_core)/kFPGACoreTop.v
 
 all: synth
