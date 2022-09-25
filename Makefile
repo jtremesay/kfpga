@@ -1,22 +1,22 @@
-target_core ?= gen
+target_core ?= k1g3x3y4io6ic2c4l
 netlist_file ?= build/$(target_core).v
 verilog_files ?= \
-	rtl/$(target_core)/Multiplexer64.v \
+	rtl/$(target_core)/Multiplexer16.v \
 	rtl/$(target_core)/LookUpTable.v \
 	rtl/$(target_core)/LogicElement.v \
-	rtl/$(target_core)/Multiplexer34.v \
-	rtl/$(target_core)/Multiplexer44.v \
+	rtl/$(target_core)/Multiplexer20.v \
+	rtl/$(target_core)/Multiplexer26.v \
 	rtl/$(target_core)/SwitchBox.v \
 	rtl/$(target_core)/LogicTile.v \
 	rtl/$(target_core)/LogicColumn.v \
 	rtl/$(target_core)/LogicGrid.v \
 	rtl/$(target_core)/Multiplexer4.v \
-	rtl/$(target_core)/Multiplexer10.v \
+	rtl/$(target_core)/Multiplexer6.v \
 	rtl/$(target_core)/IOTile.v \
 	rtl/$(target_core)/IOLine.v \
 	rtl/$(target_core)/IOColumn.v \
 	rtl/$(target_core)/kFPGACore.v \
-	rtl/$(target_core)/ShiftRegister42368.v \
+	rtl/$(target_core)/ShiftRegister2034.v \
 	rtl/$(target_core)/kFPGACoreTop.v
 
 all: synth
