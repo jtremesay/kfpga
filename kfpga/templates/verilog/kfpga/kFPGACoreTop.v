@@ -12,7 +12,7 @@
     );
     assign config_out = config_data[{{ module.config_width - 1 }}];
 
-    // Instantiate the grid
+    // Instantiate the core
     kFPGACore core(
         .data_north_in(data_north_in),
         .data_north_out(data_north_out),
