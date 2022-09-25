@@ -76,18 +76,14 @@ class SwitchBoxModule(Module):
         self.add_data_input("data_from_les", cluster_size)
         self.add_data_output("data_to_les", cluster_size * lut_size)
 
-        mux_ic = library.get_module(
-            "Multiplexer{}".format(interconnect_pairs_count * 3 + cluster_size)
-        )
+        mux_ic = library.get_module("MultiplexerSBIC")
         for side in ("north", "east", "south", "west"):
             for i in range(interconnect_pairs_count):
                 self.add_config(
                     "mux_{}{}".format(side, i), mux_ic.config.width
                 )
 
-        mux_le = library.get_module(
-            "Multiplexer{}".format(interconnect_pairs_count * 4 + cluster_size)
-        )
+        mux_le = library.get_module("MultiplexerSBLE")
         for c in range(cluster_size):
             for i in range(lut_size):
                 self.add_config(
@@ -261,13 +257,11 @@ class IOTileModule(Module):
         self.add_data_input("data_from_ic", interconnect_pairs_count)
         self.add_data_output("data_to_ic", interconnect_pairs_count)
 
-        mux_ic = library.get_module("Multiplexer{}".format(io_pairs_count))
+        mux_ic = library.get_module("MultiplexerIOIC")
         for i in range(interconnect_pairs_count):
             self.add_config("mux_ic{}".format(i), mux_ic.config.width)
 
-        mux_io = library.get_module(
-            "Multiplexer{}".format(interconnect_pairs_count)
-        )
+        mux_io = library.get_module("MultiplexerIOIO")
         for i in range(io_pairs_count):
             self.add_config("mux_io{}".format(i), mux_io.config.width)
 
@@ -457,7 +451,7 @@ def create_kfpga_library(
 ) -> Library:
     library = Library("kfpga")
 
-    mux_lut = MultiplexerModule(2**lut_size, library)
+    mux_lut = MultiplexerModule(2**lut_size, library, name="MultiplexerLUT")
     library.add_module(mux_lut)
 
     lut_module = LUTModule(lut_size, library)
@@ -467,12 +461,16 @@ def create_kfpga_library(
     library.add_module(le_module)
 
     mux_ic = MultiplexerModule(
-        interconnect_pairs_count * 3 + cluster_size, library
+        interconnect_pairs_count * 3 + cluster_size,
+        library,
+        name="MultiplexerSBIC",
     )
     library.add_module(mux_ic)
 
     mux_le = MultiplexerModule(
-        interconnect_pairs_count * 4 + cluster_size, library
+        interconnect_pairs_count * 4 + cluster_size,
+        library,
+        name="MultiplexerSBLE",
     )
     library.add_module(mux_le)
 
@@ -494,10 +492,14 @@ def create_kfpga_library(
     )
     library.add_module(g_module)
 
-    mux_io_ic = MultiplexerModule(interconnect_pairs_count, library)
+    mux_io_ic = MultiplexerModule(
+        io_pairs_count, library, name="MultiplexerIOIC"
+    )
     library.add_module(mux_io_ic)
 
-    mux_io_io = MultiplexerModule(io_pairs_count, library)
+    mux_io_io = MultiplexerModule(
+        interconnect_pairs_count, library, name="MultiplexerIOIO"
+    )
     library.add_module(mux_io_io)
 
     iot_module = IOTileModule(
@@ -524,7 +526,9 @@ def create_kfpga_library(
     )
     library.add_module(core_module)
 
-    sr_module = ShiftRegister(core_module.config.width, library)
+    sr_module = ShiftRegister(
+        core_module.config.width, library, name="ConfigShiftRegister"
+    )
     library.add_module(sr_module)
 
     top_core_module = TopCoreModule(

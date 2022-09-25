@@ -3,7 +3,7 @@
 {% block body %}
     // Instantiate the config shift register
     wire [{{ module.config_width - 1 }}:0] config_data;
-    ShiftRegister{{ module.config_width }} config_sr(
+    ConfigShiftRegister config_sr(
         .data_in(config_in),
         .data_out(config_data),
         .clock(config_clock),

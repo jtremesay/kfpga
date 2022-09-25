@@ -1,5 +1,5 @@
-module Multiplexer64(
-    input [63:0] data_in,
+module MultiplexerSBIC(
+    input [33:0] data_in,
     output data_out,
     input [5:0] config_in
 );
@@ -10,7 +10,7 @@ module Multiplexer64(
     // At each stage, we divide the search space by two.
 
     // First step of the pipeline
-    wire [63:0] stage6 = { data_in };
+    wire [63:0] stage6 = { 30'b0, data_in };
     
     // Build the pipeline
     wire [31:0] stage5 = c_selector[5] ? stage6[63:32] : stage6[31:0];

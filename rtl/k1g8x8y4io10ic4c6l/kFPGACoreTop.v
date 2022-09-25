@@ -17,7 +17,7 @@ module kFPGACoreTop(
 );
     // Instantiate the config shift register
     wire [42367:0] config_data;
-    ShiftRegister42368 config_sr(
+    ConfigShiftRegister config_sr(
         .data_in(config_in),
         .data_out(config_data),
         .clock(config_clock),

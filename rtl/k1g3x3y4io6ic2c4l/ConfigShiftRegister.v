@@ -1,4 +1,4 @@
-module ShiftRegister2034(
+module ConfigShiftRegister(
     input data_in,
     output [2033:0] data_out,
     input clock,

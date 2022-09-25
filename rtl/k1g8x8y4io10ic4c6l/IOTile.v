@@ -23,61 +23,61 @@ module IOTile(
 
     // IC
     
-    Multiplexer4 mux_ic0(
+    MultiplexerIOIC mux_ic0(
         .data_in(data_from_io),
         .data_out(data_to_ic[0]),
         .config_in(c_mux_ic0)
     );
     
-    Multiplexer4 mux_ic1(
+    MultiplexerIOIC mux_ic1(
         .data_in(data_from_io),
         .data_out(data_to_ic[1]),
         .config_in(c_mux_ic1)
     );
     
-    Multiplexer4 mux_ic2(
+    MultiplexerIOIC mux_ic2(
         .data_in(data_from_io),
         .data_out(data_to_ic[2]),
         .config_in(c_mux_ic2)
     );
     
-    Multiplexer4 mux_ic3(
+    MultiplexerIOIC mux_ic3(
         .data_in(data_from_io),
         .data_out(data_to_ic[3]),
         .config_in(c_mux_ic3)
     );
     
-    Multiplexer4 mux_ic4(
+    MultiplexerIOIC mux_ic4(
         .data_in(data_from_io),
         .data_out(data_to_ic[4]),
         .config_in(c_mux_ic4)
     );
     
-    Multiplexer4 mux_ic5(
+    MultiplexerIOIC mux_ic5(
         .data_in(data_from_io),
         .data_out(data_to_ic[5]),
         .config_in(c_mux_ic5)
     );
     
-    Multiplexer4 mux_ic6(
+    MultiplexerIOIC mux_ic6(
         .data_in(data_from_io),
         .data_out(data_to_ic[6]),
         .config_in(c_mux_ic6)
     );
     
-    Multiplexer4 mux_ic7(
+    MultiplexerIOIC mux_ic7(
         .data_in(data_from_io),
         .data_out(data_to_ic[7]),
         .config_in(c_mux_ic7)
     );
     
-    Multiplexer4 mux_ic8(
+    MultiplexerIOIC mux_ic8(
         .data_in(data_from_io),
         .data_out(data_to_ic[8]),
         .config_in(c_mux_ic8)
     );
     
-    Multiplexer4 mux_ic9(
+    MultiplexerIOIC mux_ic9(
         .data_in(data_from_io),
         .data_out(data_to_ic[9]),
         .config_in(c_mux_ic9)
@@ -86,25 +86,25 @@ module IOTile(
 
     // IO
     
-    Multiplexer10 mux_io0(
+    MultiplexerIOIO mux_io0(
         .data_in(data_from_ic),
         .data_out(data_to_io[0]),
         .config_in(c_mux_io0)
     );
     
-    Multiplexer10 mux_io1(
+    MultiplexerIOIO mux_io1(
         .data_in(data_from_ic),
         .data_out(data_to_io[1]),
         .config_in(c_mux_io1)
     );
     
-    Multiplexer10 mux_io2(
+    MultiplexerIOIO mux_io2(
         .data_in(data_from_ic),
         .data_out(data_to_io[2]),
         .config_in(c_mux_io2)
     );
     
-    Multiplexer10 mux_io3(
+    MultiplexerIOIO mux_io3(
         .data_in(data_from_ic),
         .data_out(data_to_io[3]),
         .config_in(c_mux_io3)
