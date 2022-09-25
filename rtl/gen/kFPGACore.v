@@ -34,6 +34,7 @@ module kFPGACore(
         .data_to_io(data_north_out),
         .data_from_ic(grid_north_out),
         .data_to_ic(grid_north_in),
+        .config_in(c_io_north)
     );
 
     IOColumn ioc_east(
@@ -41,6 +42,7 @@ module kFPGACore(
         .data_to_io(data_east_out),
         .data_from_ic(grid_east_out),
         .data_to_ic(grid_east_in),
+        .config_in(c_io_east)
     );
 
     IOLine iol_south(
@@ -48,6 +50,7 @@ module kFPGACore(
         .data_to_io(data_south_out),
         .data_from_ic(grid_south_out),
         .data_to_ic(grid_south_in),
+        .config_in(c_io_south)
     );
 
     IOColumn ioc_west(
@@ -55,6 +58,7 @@ module kFPGACore(
         .data_to_io(data_west_out),
         .data_from_ic(grid_west_out),
         .data_to_ic(grid_west_in),
+        .config_in(c_io_west)
     );
 
     // Instantiate the grid
