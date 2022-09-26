@@ -26,7 +26,7 @@ module kFPGACoreTop(
     );
     assign config_out = config_data[42367];
 
-    // Instantiate the grid
+    // Instantiate the core
     kFPGACore core(
         .data_north_in(data_north_in),
         .data_north_out(data_north_out),
