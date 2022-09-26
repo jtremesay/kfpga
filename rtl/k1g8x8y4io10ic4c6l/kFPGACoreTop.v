@@ -16,7 +16,7 @@ module kFPGACoreTop(
     input config_nreset
 );
     // Instantiate the config shift register
-    wire [42367:0] config_data;
+    wire [34687:0] config_data;
     ConfigShiftRegister config_sr(
         .data_in(config_in),
         .data_out(config_data),
@@ -24,7 +24,7 @@ module kFPGACoreTop(
         .enable(config_enable),
         .nreset(config_nreset),
     );
-    assign config_out = config_data[42367];
+    assign config_out = config_data[34687];
 
     // Instantiate the core
     kFPGACore core(

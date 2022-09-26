@@ -9,17 +9,17 @@ module LogicColumn(
     output [79:0] data_west_out,
     input clock,
     input nreset,
-    input [5151:0] config_in
+    input [4191:0] config_in
 );
     // Dispatch the config 
-    wire [643:0] c_tile0 = config_in[643:0]; 
-    wire [643:0] c_tile1 = config_in[1287:644]; 
-    wire [643:0] c_tile2 = config_in[1931:1288]; 
-    wire [643:0] c_tile3 = config_in[2575:1932]; 
-    wire [643:0] c_tile4 = config_in[3219:2576]; 
-    wire [643:0] c_tile5 = config_in[3863:3220]; 
-    wire [643:0] c_tile6 = config_in[4507:3864]; 
-    wire [643:0] c_tile7 = config_in[5151:4508];
+    wire [523:0] c_tile0 = config_in[523:0]; 
+    wire [523:0] c_tile1 = config_in[1047:524]; 
+    wire [523:0] c_tile2 = config_in[1571:1048]; 
+    wire [523:0] c_tile3 = config_in[2095:1572]; 
+    wire [523:0] c_tile4 = config_in[2619:2096]; 
+    wire [523:0] c_tile5 = config_in[3143:2620]; 
+    wire [523:0] c_tile6 = config_in[3667:3144]; 
+    wire [523:0] c_tile7 = config_in[4191:3668];
 
     // Instantiate the tiles
     wire [9:0] lt0_north_out;

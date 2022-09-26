@@ -461,7 +461,7 @@ def create_kfpga_library(
     library.add_module(le_module)
 
     mux_ic = MultiplexerModule(
-        interconnect_pairs_count * 3 + cluster_size,
+        3 + cluster_size,
         library,
         name="MultiplexerSBIC",
     )

@@ -9,14 +9,14 @@ module kFPGACore(
     output [11:0] data_west_out,
     input clock,
     input nreset,
-    input [2033:0] config_in
+    input [1601:0] config_in
 );
     // Dispatch the config 
     wire [71:0] c_io_north = config_in[71:0]; 
     wire [71:0] c_io_east = config_in[143:72]; 
     wire [71:0] c_io_south = config_in[215:144]; 
     wire [71:0] c_io_west = config_in[287:216]; 
-    wire [1745:0] c_grid = config_in[2033:288];
+    wire [1313:0] c_grid = config_in[1601:288];
 
     // Declare the data wire used by the grid 
     wire [17:0] grid_north_in;

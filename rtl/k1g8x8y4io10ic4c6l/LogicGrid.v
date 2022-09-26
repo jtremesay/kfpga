@@ -9,17 +9,17 @@ module LogicGrid(
     output [79:0] data_west_out,
     input clock,
     input nreset,
-    input [41215:0] config_in
+    input [33535:0] config_in
 );
     // Dispatch the config 
-    wire [5151:0] c_column0 = config_in[5151:0]; 
-    wire [5151:0] c_column1 = config_in[10303:5152]; 
-    wire [5151:0] c_column2 = config_in[15455:10304]; 
-    wire [5151:0] c_column3 = config_in[20607:15456]; 
-    wire [5151:0] c_column4 = config_in[25759:20608]; 
-    wire [5151:0] c_column5 = config_in[30911:25760]; 
-    wire [5151:0] c_column6 = config_in[36063:30912]; 
-    wire [5151:0] c_column7 = config_in[41215:36064];
+    wire [4191:0] c_column0 = config_in[4191:0]; 
+    wire [4191:0] c_column1 = config_in[8383:4192]; 
+    wire [4191:0] c_column2 = config_in[12575:8384]; 
+    wire [4191:0] c_column3 = config_in[16767:12576]; 
+    wire [4191:0] c_column4 = config_in[20959:16768]; 
+    wire [4191:0] c_column5 = config_in[25151:20960]; 
+    wire [4191:0] c_column6 = config_in[29343:25152]; 
+    wire [4191:0] c_column7 = config_in[33535:29344];
 
     // Instantiate the columns
     wire [79:0] lc0_east_out;

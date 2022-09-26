@@ -9,12 +9,12 @@ module LogicTile(
     output [5:0] data_west_out,
     input clock,
     input nreset,
-    input [193:0] config_in
+    input [145:0] config_in
 );
     // Dispatch the config 
     wire [16:0] c_le0 = config_in[16:0]; 
     wire [16:0] c_le1 = config_in[33:17]; 
-    wire [159:0] c_switchbox = config_in[193:34];
+    wire [111:0] c_switchbox = config_in[145:34];
 
     // Connection used between the logic element and the switchbox
     wire [7:0] w_to_les;
