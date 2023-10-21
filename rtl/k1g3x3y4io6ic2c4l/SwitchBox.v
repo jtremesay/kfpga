@@ -12,43 +12,43 @@ module SwitchBox(
     input [111:0] config_in
 );
     // Dispatch the config 
-    wire [2:0] c_mux_north [5:0];
-    assign c_mux_north[0] = config_in[2:0];
-    assign c_mux_north[1] = config_in[5:3];
-    assign c_mux_north[2] = config_in[8:6];
-    assign c_mux_north[3] = config_in[11:9];
-    assign c_mux_north[4] = config_in[14:12];
-    assign c_mux_north[5] = config_in[17:15]; 
-    wire [2:0] c_mux_east [5:0];
-    assign c_mux_east[0] = config_in[20:18];
-    assign c_mux_east[1] = config_in[23:21];
-    assign c_mux_east[2] = config_in[26:24];
-    assign c_mux_east[3] = config_in[29:27];
-    assign c_mux_east[4] = config_in[32:30];
-    assign c_mux_east[5] = config_in[35:33]; 
-    wire [2:0] c_mux_south [5:0];
-    assign c_mux_south[0] = config_in[38:36];
-    assign c_mux_south[1] = config_in[41:39];
-    assign c_mux_south[2] = config_in[44:42];
-    assign c_mux_south[3] = config_in[47:45];
-    assign c_mux_south[4] = config_in[50:48];
-    assign c_mux_south[5] = config_in[53:51]; 
-    wire [2:0] c_mux_west [5:0];
-    assign c_mux_west[0] = config_in[56:54];
-    assign c_mux_west[1] = config_in[59:57];
-    assign c_mux_west[2] = config_in[62:60];
-    assign c_mux_west[3] = config_in[65:63];
-    assign c_mux_west[4] = config_in[68:66];
-    assign c_mux_west[5] = config_in[71:69]; 
-    wire [4:0] c_mux_le [7:0];
-    assign c_mux_le[0] = config_in[76:72];
-    assign c_mux_le[1] = config_in[81:77];
-    assign c_mux_le[2] = config_in[86:82];
-    assign c_mux_le[3] = config_in[91:87];
-    assign c_mux_le[4] = config_in[96:92];
-    assign c_mux_le[5] = config_in[101:97];
-    assign c_mux_le[6] = config_in[106:102];
-    assign c_mux_le[7] = config_in[111:107];
+    wire [2:0] c_muxes_north [5:0];
+    assign c_muxes_north[0] = config_in[2:0];
+    assign c_muxes_north[1] = config_in[5:3];
+    assign c_muxes_north[2] = config_in[8:6];
+    assign c_muxes_north[3] = config_in[11:9];
+    assign c_muxes_north[4] = config_in[14:12];
+    assign c_muxes_north[5] = config_in[17:15]; 
+    wire [2:0] c_muxes_east [5:0];
+    assign c_muxes_east[0] = config_in[20:18];
+    assign c_muxes_east[1] = config_in[23:21];
+    assign c_muxes_east[2] = config_in[26:24];
+    assign c_muxes_east[3] = config_in[29:27];
+    assign c_muxes_east[4] = config_in[32:30];
+    assign c_muxes_east[5] = config_in[35:33]; 
+    wire [2:0] c_muxes_south [5:0];
+    assign c_muxes_south[0] = config_in[38:36];
+    assign c_muxes_south[1] = config_in[41:39];
+    assign c_muxes_south[2] = config_in[44:42];
+    assign c_muxes_south[3] = config_in[47:45];
+    assign c_muxes_south[4] = config_in[50:48];
+    assign c_muxes_south[5] = config_in[53:51]; 
+    wire [2:0] c_muxes_west [5:0];
+    assign c_muxes_west[0] = config_in[56:54];
+    assign c_muxes_west[1] = config_in[59:57];
+    assign c_muxes_west[2] = config_in[62:60];
+    assign c_muxes_west[3] = config_in[65:63];
+    assign c_muxes_west[4] = config_in[68:66];
+    assign c_muxes_west[5] = config_in[71:69]; 
+    wire [4:0] c_muxes_les [7:0];
+    assign c_muxes_les[0] = config_in[76:72];
+    assign c_muxes_les[1] = config_in[81:77];
+    assign c_muxes_les[2] = config_in[86:82];
+    assign c_muxes_les[3] = config_in[91:87];
+    assign c_muxes_les[4] = config_in[96:92];
+    assign c_muxes_les[5] = config_in[101:97];
+    assign c_muxes_les[6] = config_in[106:102];
+    assign c_muxes_les[7] = config_in[111:107];
 
     // Use Wilton switchbox
     // https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.44.4925&rep=rep1&type=pdf
@@ -65,7 +65,7 @@ module SwitchBox(
                 data_from_les
             }),
             .data_out(data_north_out[i]),
-            .config_in(c_mux_north[i])
+            .config_in(c_muxes_north[i])
         );
     end
 
@@ -79,7 +79,7 @@ module SwitchBox(
                 data_from_les
             }),
             .data_out(data_east_out[i]),
-            .config_in(c_mux_north[i])
+            .config_in(c_muxes_north[i])
         );
     end
 
@@ -93,7 +93,7 @@ module SwitchBox(
                 data_from_les
             }),
             .data_out(data_south_out[i]),
-            .config_in(c_mux_south[i])
+            .config_in(c_muxes_south[i])
         );
     end
 
@@ -107,7 +107,7 @@ module SwitchBox(
                 data_from_les
             }),
             .data_out(data_west_out[i]),
-            .config_in(c_mux_west[i])
+            .config_in(c_muxes_west[i])
         );
     end
 
@@ -123,7 +123,7 @@ module SwitchBox(
                     data_from_les
                 }),
                 .data_out(data_to_les[i * 4 + j]),
-                .config_in(c_mux_le[i][j])
+                .config_in(c_muxes_les[i][j])
             );
         end
     end

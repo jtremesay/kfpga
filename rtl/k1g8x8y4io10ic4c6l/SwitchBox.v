@@ -12,75 +12,75 @@ module SwitchBox(
     input [263:0] config_in
 );
     // Dispatch the config 
-    wire [2:0] c_mux_north [9:0];
-    assign c_mux_north[0] = config_in[2:0];
-    assign c_mux_north[1] = config_in[5:3];
-    assign c_mux_north[2] = config_in[8:6];
-    assign c_mux_north[3] = config_in[11:9];
-    assign c_mux_north[4] = config_in[14:12];
-    assign c_mux_north[5] = config_in[17:15];
-    assign c_mux_north[6] = config_in[20:18];
-    assign c_mux_north[7] = config_in[23:21];
-    assign c_mux_north[8] = config_in[26:24];
-    assign c_mux_north[9] = config_in[29:27]; 
-    wire [2:0] c_mux_east [9:0];
-    assign c_mux_east[0] = config_in[32:30];
-    assign c_mux_east[1] = config_in[35:33];
-    assign c_mux_east[2] = config_in[38:36];
-    assign c_mux_east[3] = config_in[41:39];
-    assign c_mux_east[4] = config_in[44:42];
-    assign c_mux_east[5] = config_in[47:45];
-    assign c_mux_east[6] = config_in[50:48];
-    assign c_mux_east[7] = config_in[53:51];
-    assign c_mux_east[8] = config_in[56:54];
-    assign c_mux_east[9] = config_in[59:57]; 
-    wire [2:0] c_mux_south [9:0];
-    assign c_mux_south[0] = config_in[62:60];
-    assign c_mux_south[1] = config_in[65:63];
-    assign c_mux_south[2] = config_in[68:66];
-    assign c_mux_south[3] = config_in[71:69];
-    assign c_mux_south[4] = config_in[74:72];
-    assign c_mux_south[5] = config_in[77:75];
-    assign c_mux_south[6] = config_in[80:78];
-    assign c_mux_south[7] = config_in[83:81];
-    assign c_mux_south[8] = config_in[86:84];
-    assign c_mux_south[9] = config_in[89:87]; 
-    wire [2:0] c_mux_west [9:0];
-    assign c_mux_west[0] = config_in[92:90];
-    assign c_mux_west[1] = config_in[95:93];
-    assign c_mux_west[2] = config_in[98:96];
-    assign c_mux_west[3] = config_in[101:99];
-    assign c_mux_west[4] = config_in[104:102];
-    assign c_mux_west[5] = config_in[107:105];
-    assign c_mux_west[6] = config_in[110:108];
-    assign c_mux_west[7] = config_in[113:111];
-    assign c_mux_west[8] = config_in[116:114];
-    assign c_mux_west[9] = config_in[119:117]; 
-    wire [5:0] c_mux_le [23:0];
-    assign c_mux_le[0] = config_in[125:120];
-    assign c_mux_le[1] = config_in[131:126];
-    assign c_mux_le[2] = config_in[137:132];
-    assign c_mux_le[3] = config_in[143:138];
-    assign c_mux_le[4] = config_in[149:144];
-    assign c_mux_le[5] = config_in[155:150];
-    assign c_mux_le[6] = config_in[161:156];
-    assign c_mux_le[7] = config_in[167:162];
-    assign c_mux_le[8] = config_in[173:168];
-    assign c_mux_le[9] = config_in[179:174];
-    assign c_mux_le[10] = config_in[185:180];
-    assign c_mux_le[11] = config_in[191:186];
-    assign c_mux_le[12] = config_in[197:192];
-    assign c_mux_le[13] = config_in[203:198];
-    assign c_mux_le[14] = config_in[209:204];
-    assign c_mux_le[15] = config_in[215:210];
-    assign c_mux_le[16] = config_in[221:216];
-    assign c_mux_le[17] = config_in[227:222];
-    assign c_mux_le[18] = config_in[233:228];
-    assign c_mux_le[19] = config_in[239:234];
-    assign c_mux_le[20] = config_in[245:240];
-    assign c_mux_le[21] = config_in[251:246];
-    assign c_mux_le[22] = config_in[257:252];
-    assign c_mux_le[23] = config_in[263:258];
+    wire [2:0] c_muxes_north [9:0];
+    assign c_muxes_north[0] = config_in[2:0];
+    assign c_muxes_north[1] = config_in[5:3];
+    assign c_muxes_north[2] = config_in[8:6];
+    assign c_muxes_north[3] = config_in[11:9];
+    assign c_muxes_north[4] = config_in[14:12];
+    assign c_muxes_north[5] = config_in[17:15];
+    assign c_muxes_north[6] = config_in[20:18];
+    assign c_muxes_north[7] = config_in[23:21];
+    assign c_muxes_north[8] = config_in[26:24];
+    assign c_muxes_north[9] = config_in[29:27]; 
+    wire [2:0] c_muxes_east [9:0];
+    assign c_muxes_east[0] = config_in[32:30];
+    assign c_muxes_east[1] = config_in[35:33];
+    assign c_muxes_east[2] = config_in[38:36];
+    assign c_muxes_east[3] = config_in[41:39];
+    assign c_muxes_east[4] = config_in[44:42];
+    assign c_muxes_east[5] = config_in[47:45];
+    assign c_muxes_east[6] = config_in[50:48];
+    assign c_muxes_east[7] = config_in[53:51];
+    assign c_muxes_east[8] = config_in[56:54];
+    assign c_muxes_east[9] = config_in[59:57]; 
+    wire [2:0] c_muxes_south [9:0];
+    assign c_muxes_south[0] = config_in[62:60];
+    assign c_muxes_south[1] = config_in[65:63];
+    assign c_muxes_south[2] = config_in[68:66];
+    assign c_muxes_south[3] = config_in[71:69];
+    assign c_muxes_south[4] = config_in[74:72];
+    assign c_muxes_south[5] = config_in[77:75];
+    assign c_muxes_south[6] = config_in[80:78];
+    assign c_muxes_south[7] = config_in[83:81];
+    assign c_muxes_south[8] = config_in[86:84];
+    assign c_muxes_south[9] = config_in[89:87]; 
+    wire [2:0] c_muxes_west [9:0];
+    assign c_muxes_west[0] = config_in[92:90];
+    assign c_muxes_west[1] = config_in[95:93];
+    assign c_muxes_west[2] = config_in[98:96];
+    assign c_muxes_west[3] = config_in[101:99];
+    assign c_muxes_west[4] = config_in[104:102];
+    assign c_muxes_west[5] = config_in[107:105];
+    assign c_muxes_west[6] = config_in[110:108];
+    assign c_muxes_west[7] = config_in[113:111];
+    assign c_muxes_west[8] = config_in[116:114];
+    assign c_muxes_west[9] = config_in[119:117]; 
+    wire [5:0] c_muxes_les [23:0];
+    assign c_muxes_les[0] = config_in[125:120];
+    assign c_muxes_les[1] = config_in[131:126];
+    assign c_muxes_les[2] = config_in[137:132];
+    assign c_muxes_les[3] = config_in[143:138];
+    assign c_muxes_les[4] = config_in[149:144];
+    assign c_muxes_les[5] = config_in[155:150];
+    assign c_muxes_les[6] = config_in[161:156];
+    assign c_muxes_les[7] = config_in[167:162];
+    assign c_muxes_les[8] = config_in[173:168];
+    assign c_muxes_les[9] = config_in[179:174];
+    assign c_muxes_les[10] = config_in[185:180];
+    assign c_muxes_les[11] = config_in[191:186];
+    assign c_muxes_les[12] = config_in[197:192];
+    assign c_muxes_les[13] = config_in[203:198];
+    assign c_muxes_les[14] = config_in[209:204];
+    assign c_muxes_les[15] = config_in[215:210];
+    assign c_muxes_les[16] = config_in[221:216];
+    assign c_muxes_les[17] = config_in[227:222];
+    assign c_muxes_les[18] = config_in[233:228];
+    assign c_muxes_les[19] = config_in[239:234];
+    assign c_muxes_les[20] = config_in[245:240];
+    assign c_muxes_les[21] = config_in[251:246];
+    assign c_muxes_les[22] = config_in[257:252];
+    assign c_muxes_les[23] = config_in[263:258];
 
     // Use Wilton switchbox
     // https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.44.4925&rep=rep1&type=pdf
@@ -97,7 +97,7 @@ module SwitchBox(
                 data_from_les
             }),
             .data_out(data_north_out[i]),
-            .config_in(c_mux_north[i])
+            .config_in(c_muxes_north[i])
         );
     end
 
@@ -111,7 +111,7 @@ module SwitchBox(
                 data_from_les
             }),
             .data_out(data_east_out[i]),
-            .config_in(c_mux_north[i])
+            .config_in(c_muxes_north[i])
         );
     end
 
@@ -125,7 +125,7 @@ module SwitchBox(
                 data_from_les
             }),
             .data_out(data_south_out[i]),
-            .config_in(c_mux_south[i])
+            .config_in(c_muxes_south[i])
         );
     end
 
@@ -139,7 +139,7 @@ module SwitchBox(
                 data_from_les
             }),
             .data_out(data_west_out[i]),
-            .config_in(c_mux_west[i])
+            .config_in(c_muxes_west[i])
         );
     end
 
@@ -155,7 +155,7 @@ module SwitchBox(
                     data_from_les
                 }),
                 .data_out(data_to_les[i * 6 + j]),
-                .config_in(c_mux_le[i][j])
+                .config_in(c_muxes_les[i][j])
             );
         end
     end

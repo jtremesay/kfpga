@@ -73,11 +73,11 @@ class SwitchBoxModule(Module):
         mux_ic = library.get_module("MultiplexerSBIC")
         for side in ("north", "east", "south", "west"):
             self.add_config(
-                "mux_{}".format(side), mux_ic.config.width, interconnect_pairs_count
+                "muxes_{}".format(side), mux_ic.config.width, interconnect_pairs_count
             )
 
         mux_le = library.get_module("MultiplexerSBLE")
-        self.add_config("mux_le", mux_le.config.width, cluster_size * lut_size)
+        self.add_config("muxes_les", mux_le.config.width, cluster_size * lut_size)
 
 
 class LogicTileModule(Module):

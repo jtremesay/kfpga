@@ -16,7 +16,7 @@
                 data_from_les
             }),
             .data_out(data_north_out[i]),
-            .config_in(c_mux_north[i])
+            .config_in(c_muxes_north[i])
         );
     end
 
@@ -30,7 +30,7 @@
                 data_from_les
             }),
             .data_out(data_east_out[i]),
-            .config_in(c_mux_north[i])
+            .config_in(c_muxes_north[i])
         );
     end
 
@@ -44,7 +44,7 @@
                 data_from_les
             }),
             .data_out(data_south_out[i]),
-            .config_in(c_mux_south[i])
+            .config_in(c_muxes_south[i])
         );
     end
 
@@ -58,7 +58,7 @@
                 data_from_les
             }),
             .data_out(data_west_out[i]),
-            .config_in(c_mux_west[i])
+            .config_in(c_muxes_west[i])
         );
     end
 
@@ -74,7 +74,7 @@
                     data_from_les
                 }),
                 .data_out(data_to_les[i * {{ module.lut_size }} + j]),
-                .config_in(c_mux_le[i][j])
+                .config_in(c_muxes_les[i][j])
             );
         end
     end
