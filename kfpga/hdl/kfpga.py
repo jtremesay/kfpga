@@ -56,9 +56,7 @@ class SwitchBoxModule(Module):
             )
 
         if lut_size < 2:
-            raise ValueError(
-                "Minimal LUT size is 2, asked: {}".format(lut_size)
-            )
+            raise ValueError("Minimal LUT size is 2, asked: {}".format(lut_size))
 
         super().__init__("SwitchBox", library)
         self.interconnect_pairs_count = interconnect_pairs_count
@@ -66,29 +64,22 @@ class SwitchBoxModule(Module):
         self.lut_size = lut_size
 
         for side in ("north", "east", "south", "west"):
-            self.add_data_input(
-                "data_{}_in".format(side), interconnect_pairs_count
-            )
-            self.add_data_output(
-                "data_{}_out".format(side), interconnect_pairs_count
-            )
+            self.add_data_input("data_{}_in".format(side), interconnect_pairs_count)
+            self.add_data_output("data_{}_out".format(side), interconnect_pairs_count)
 
         self.add_data_input("data_from_les", cluster_size)
         self.add_data_output("data_to_les", cluster_size * lut_size)
 
         mux_ic = library.get_module("MultiplexerSBIC")
         for side in ("north", "east", "south", "west"):
-            for i in range(interconnect_pairs_count):
-                self.add_config(
-                    "mux_{}{}".format(side, i), mux_ic.config.width
-                )
+            self.add_config(
+                "mux_{}".format(side), mux_ic.config.width, interconnect_pairs_count
+            )
 
         mux_le = library.get_module("MultiplexerSBLE")
         for c in range(cluster_size):
             for i in range(lut_size):
-                self.add_config(
-                    "mux_le{}_i{}".format(c, i), mux_le.config.width
-                )
+                self.add_config("mux_le{}_i{}".format(c, i), mux_le.config.width)
 
 
 class LogicTileModule(Module):
@@ -112,21 +103,15 @@ class LogicTileModule(Module):
             )
 
         if lut_size < 2:
-            raise ValueError(
-                "Minimal LUT size is 2, asked: {}".format(lut_size)
-            )
+            raise ValueError("Minimal LUT size is 2, asked: {}".format(lut_size))
 
         super().__init__("LogicTile", library)
         self.cluster_size = cluster_size
         self.lut_size = lut_size
 
         for side in ("north", "east", "south", "west"):
-            self.add_data_input(
-                "data_{}_in".format(side), interconnect_pairs_count
-            )
-            self.add_data_output(
-                "data_{}_out".format(side), interconnect_pairs_count
-            )
+            self.add_data_input("data_{}_in".format(side), interconnect_pairs_count)
+            self.add_data_output("data_{}_out".format(side), interconnect_pairs_count)
         self.set_clock()
         self.set_nreset()
 
@@ -162,15 +147,11 @@ class LogicColumnModule(Module):
         self.add_data_input("data_north_in", interconnect_pairs_count)
         self.add_data_output("data_north_out", interconnect_pairs_count)
         self.add_data_input("data_east_in", interconnect_pairs_count * height)
-        self.add_data_output(
-            "data_east_out", interconnect_pairs_count * height
-        )
+        self.add_data_output("data_east_out", interconnect_pairs_count * height)
         self.add_data_input("data_south_in", interconnect_pairs_count)
         self.add_data_output("data_south_out", interconnect_pairs_count)
         self.add_data_input("data_west_in", interconnect_pairs_count * height)
-        self.add_data_output(
-            "data_west_out", interconnect_pairs_count * height
-        )
+        self.add_data_output("data_west_out", interconnect_pairs_count * height)
         self.set_clock()
         self.set_nreset()
 
@@ -206,21 +187,13 @@ class LogicGridModule(Module):
         self.interconnect_pairs_count = interconnect_pairs_count
 
         self.add_data_input("data_north_in", interconnect_pairs_count * width)
-        self.add_data_output(
-            "data_north_out", interconnect_pairs_count * width
-        )
+        self.add_data_output("data_north_out", interconnect_pairs_count * width)
         self.add_data_input("data_east_in", interconnect_pairs_count * height)
-        self.add_data_output(
-            "data_east_out", interconnect_pairs_count * height
-        )
+        self.add_data_output("data_east_out", interconnect_pairs_count * height)
         self.add_data_input("data_south_in", interconnect_pairs_count * width)
-        self.add_data_output(
-            "data_south_out", interconnect_pairs_count * width
-        )
+        self.add_data_output("data_south_out", interconnect_pairs_count * width)
         self.add_data_input("data_west_in", interconnect_pairs_count * height)
-        self.add_data_output(
-            "data_west_out", interconnect_pairs_count * height
-        )
+        self.add_data_output("data_west_out", interconnect_pairs_count * height)
         self.set_clock()
         self.set_nreset()
 
@@ -487,14 +460,10 @@ def create_kfpga_library(
     c_module = LogicColumnModule(height, interconnect_pairs_count, library)
     library.add_module(c_module)
 
-    g_module = LogicGridModule(
-        width, height, interconnect_pairs_count, library
-    )
+    g_module = LogicGridModule(width, height, interconnect_pairs_count, library)
     library.add_module(g_module)
 
-    mux_io_ic = MultiplexerModule(
-        io_pairs_count, library, name="MultiplexerIOIC"
-    )
+    mux_io_ic = MultiplexerModule(io_pairs_count, library, name="MultiplexerIOIC")
     library.add_module(mux_io_ic)
 
     mux_io_io = MultiplexerModule(
@@ -502,14 +471,10 @@ def create_kfpga_library(
     )
     library.add_module(mux_io_io)
 
-    iot_module = IOTileModule(
-        io_pairs_count, interconnect_pairs_count, library
-    )
+    iot_module = IOTileModule(io_pairs_count, interconnect_pairs_count, library)
     library.add_module(iot_module)
 
-    iol_module = IOLineModule(
-        width, io_pairs_count, interconnect_pairs_count, library
-    )
+    iol_module = IOLineModule(width, io_pairs_count, interconnect_pairs_count, library)
     library.add_module(iol_module)
 
     ioc_module = IOColumnModule(

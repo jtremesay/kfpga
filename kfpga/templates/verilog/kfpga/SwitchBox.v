@@ -6,62 +6,80 @@
     // 6.1.2: Logic Resources, p103
 
     // Side north
-    {%- for i in range(module.interconnect_pairs_count) %}
-    MultiplexerSBIC mux_north{{ i }}(
-        .data_in({
-            data_west_in[{{ (i + 1) % module.interconnect_pairs_count }}],
-            data_south_in[{{ i }}], 
-            data_east_in[{{ (module.interconnect_pairs_count - i) % module.interconnect_pairs_count }}],
-            data_from_les
-        }),
-        .data_out(data_north_out[{{ i }}]),
-        .config_in(c_mux_north{{ i }})
-    );
-    {% endfor %}
+    genvar i, j;
+    for (i = 0; i < {{ module.interconnect_pairs_count}}; i = i + 1 ) begin
+        MultiplexerSBIC mux_north(
+            .data_in({
+                data_west_in[(i + 1) % {{ module.interconnect_pairs_count }}],
+                data_south_in[ i ], 
+                data_east_in[({{ module.interconnect_pairs_count }} - i) % {{ module.interconnect_pairs_count }}],
+                data_from_les
+            }),
+            .data_out(data_north_out[i]),
+            .config_in(c_mux_north[i])
+        );
+    end
 
     // Side east
-    {%- for i in range(module.interconnect_pairs_count) %}
-    MultiplexerSBIC mux_east{{ i }}(
-        .data_in({
-            data_north_in[{{ (module.interconnect_pairs_count - i) % module.interconnect_pairs_count }}],
-            data_west_in[{{ i }}],
-            data_south_in[{{ (i + 1) % module.interconnect_pairs_count }}],
-            data_from_les
-        }),
-        .data_out(data_east_out[{{ i }}]),
-        .config_in(c_mux_east{{ i }})
-    );
-    {% endfor %}
+    for (i = 0; i < {{ module.interconnect_pairs_count}}; i = i + 1 ) begin
+        MultiplexerSBIC mux_east(
+            .data_in({
+                data_north_in[({{ module.interconnect_pairs_count }} - i) % {{ module.interconnect_pairs_count }}],
+                data_west_in[i],
+                data_south_in[(i + 1) % {{ module.interconnect_pairs_count }}],
+                data_from_les
+            }),
+            .data_out(data_east_out[i]),
+            .config_in(c_mux_north[i])
+        );
+    end
 
     // Side south
-    {%- for i in range(module.interconnect_pairs_count) %}
-    MultiplexerSBIC mux_south{{ i }}(
-        .data_in({
-            data_east_in[{{ (i + 1) % module.interconnect_pairs_count }}],
-            data_north_in[{{ i }}],
-            data_west_in[{{ (2 * module.interconnect_pairs_count - 2 - i) % module.interconnect_pairs_count }}],
-            data_from_les
-        }),
-        .data_out(data_south_out[{{ i }}]),
-        .config_in(c_mux_south{{ i }})
-    );
-    {% endfor %}
+    for (i = 0; i < {{ module.interconnect_pairs_count}}; i = i + 1 ) begin
+        MultiplexerSBIC mux_south(
+            .data_in({
+                data_east_in[({{ i }} + 1) % {{ module.interconnect_pairs_count }}],
+                data_north_in[i],
+                data_west_in[({{ 2 *  module.interconnect_pairs_count - 2 }} - i) % {{ module.interconnect_pairs_count }}],
+                data_from_les
+            }),
+            .data_out(data_south_out[i]),
+            .config_in(c_mux_south[i])
+        );
+    end
 
     // Side west
-    {%- for i in range(module.interconnect_pairs_count) %}
-    MultiplexerSBIC mux_west{{ i }}(
-        .data_in({
-            data_south_in[{{ (2 * module.interconnect_pairs_count - 2 - i) % module.interconnect_pairs_count }}],
-            data_east_in[{{ i }}],
-            data_north_in[{{ (i + 1) % module.interconnect_pairs_count }}],
-            data_from_les
-        }),
-        .data_out(data_west_out[{{ i }}]),
-        .config_in(c_mux_west{{ i }})
-    );
-    {% endfor %}
+    for (i = 0; i < {{ module.interconnect_pairs_count}}; i = i + 1 ) begin
+        MultiplexerSBIC mux_west(
+            .data_in({
+                data_south_in[({{ 2 * module.interconnect_pairs_count - 2 }} - i) % {{ module.interconnect_pairs_count }}],
+                data_east_in[i],
+                data_north_in[(i + 1) % {{ module.interconnect_pairs_count }}],
+                data_from_les
+            }),
+            .data_out(data_west_out[i]),
+            .config_in(c_mux_west[i])
+        );
+    end
 
     // Le 
+    {#
+    for (i = 0; i < {{ module.cluster_size }}; i = i + 1) begin
+        for (j = 0; j < {{ module.lut_size }}; j = j + 1 ) begin
+            MultiplexerSBLE mux_le(
+                .data_in({ 
+                    data_north_in,
+                    data_east_in,
+                    data_south_in,
+                    data_west_in,
+                    data_from_les
+                }),
+                .data_out(data_to_les[i * {{ module.lut_size }} + j]),
+                .config_in(c_mux_le[i][j])
+            );
+        end
+    end
+    #}
     {% for c in range(module.cluster_size) %}{% for i in range(module.lut_size) %}
     MultiplexerSBLE mux_le{{ c }}_i{{ i }}(
         .data_in({ 

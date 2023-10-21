@@ -7,9 +7,7 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from .config import ConfigBitstream, ConfigByte
 from .port import ConfigPort, Port
 
-env = Environment(
-    loader=PackageLoader("kfpga"), autoescape=select_autoescape()
-)
+env = Environment(loader=PackageLoader("kfpga"), autoescape=select_autoescape())
 
 
 class Module:
@@ -54,8 +52,8 @@ class Module:
         port = Port(name, Port.Direction.output, width)
         self.add_port(port)
 
-    def add_config(self, name: str, width: Optional[int] = 1) -> None:
-        config = ConfigByte(name, width)
+    def add_config(self, name: str, width: Optional[int] = 1, count=1) -> None:
+        config = ConfigByte(name, width, count)
         self.config.add_config(config)
 
         if self.config_port is None:

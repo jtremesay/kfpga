@@ -2,9 +2,10 @@ from typing import Generator, Tuple
 
 
 class ConfigByte:
-    def __init__(self, name: str, width: int) -> None:
+    def __init__(self, name: str, width: int, count: int = 1) -> None:
         self.name = name
         self.width = width
+        self.count = count
 
 
 class ConfigBitstream:
@@ -18,9 +19,7 @@ class ConfigBitstream:
             pass
         else:
             raise ValueError(
-                "Config with the same name already exists {}".format(
-                    config.name
-                )
+                "Config with the same name already exists {}".format(config.name)
             )
 
         self.configs.append(config)
@@ -34,10 +33,10 @@ class ConfigBitstream:
 
     @property
     def width(self) -> int:
-        return sum(c.width for c in self.configs)
+        return sum(c.width * c.count for c in self.configs)
 
     def enumerate(self) -> Generator[Tuple[int, ConfigByte], None, None]:
         offset = 0
         for config in self.configs:
             yield offset, config
-            offset += config.width
+            offset += config.width * config.count
