@@ -82,643 +82,742 @@ module SwitchBox(
     // 6.1.2: Logic Resources, p103
 
     // Side north
-    
-    wire [6:0] w_inputs_for_north0 = {
-        data_west_in[1],
-        data_south_in[0], 
-        data_east_in[0],
-        data_from_les
-    };
     MultiplexerSBIC mux_north0(
-        .data_in(w_inputs_for_north0),
+        .data_in({
+            data_west_in[1],
+            data_south_in[0], 
+            data_east_in[0],
+            data_from_les
+        }),
         .data_out(data_north_out[0]),
         .config_in(c_mux_north0)
     );
     
-    wire [6:0] w_inputs_for_north1 = {
-        data_west_in[2],
-        data_south_in[1], 
-        data_east_in[9],
-        data_from_les
-    };
     MultiplexerSBIC mux_north1(
-        .data_in(w_inputs_for_north1),
+        .data_in({
+            data_west_in[2],
+            data_south_in[1], 
+            data_east_in[9],
+            data_from_les
+        }),
         .data_out(data_north_out[1]),
         .config_in(c_mux_north1)
     );
     
-    wire [6:0] w_inputs_for_north2 = {
-        data_west_in[3],
-        data_south_in[2], 
-        data_east_in[8],
-        data_from_les
-    };
     MultiplexerSBIC mux_north2(
-        .data_in(w_inputs_for_north2),
+        .data_in({
+            data_west_in[3],
+            data_south_in[2], 
+            data_east_in[8],
+            data_from_les
+        }),
         .data_out(data_north_out[2]),
         .config_in(c_mux_north2)
     );
     
-    wire [6:0] w_inputs_for_north3 = {
-        data_west_in[4],
-        data_south_in[3], 
-        data_east_in[7],
-        data_from_les
-    };
     MultiplexerSBIC mux_north3(
-        .data_in(w_inputs_for_north3),
+        .data_in({
+            data_west_in[4],
+            data_south_in[3], 
+            data_east_in[7],
+            data_from_les
+        }),
         .data_out(data_north_out[3]),
         .config_in(c_mux_north3)
     );
     
-    wire [6:0] w_inputs_for_north4 = {
-        data_west_in[5],
-        data_south_in[4], 
-        data_east_in[6],
-        data_from_les
-    };
     MultiplexerSBIC mux_north4(
-        .data_in(w_inputs_for_north4),
+        .data_in({
+            data_west_in[5],
+            data_south_in[4], 
+            data_east_in[6],
+            data_from_les
+        }),
         .data_out(data_north_out[4]),
         .config_in(c_mux_north4)
     );
     
-    wire [6:0] w_inputs_for_north5 = {
-        data_west_in[6],
-        data_south_in[5], 
-        data_east_in[5],
-        data_from_les
-    };
     MultiplexerSBIC mux_north5(
-        .data_in(w_inputs_for_north5),
+        .data_in({
+            data_west_in[6],
+            data_south_in[5], 
+            data_east_in[5],
+            data_from_les
+        }),
         .data_out(data_north_out[5]),
         .config_in(c_mux_north5)
     );
     
-    wire [6:0] w_inputs_for_north6 = {
-        data_west_in[7],
-        data_south_in[6], 
-        data_east_in[4],
-        data_from_les
-    };
     MultiplexerSBIC mux_north6(
-        .data_in(w_inputs_for_north6),
+        .data_in({
+            data_west_in[7],
+            data_south_in[6], 
+            data_east_in[4],
+            data_from_les
+        }),
         .data_out(data_north_out[6]),
         .config_in(c_mux_north6)
     );
     
-    wire [6:0] w_inputs_for_north7 = {
-        data_west_in[8],
-        data_south_in[7], 
-        data_east_in[3],
-        data_from_les
-    };
     MultiplexerSBIC mux_north7(
-        .data_in(w_inputs_for_north7),
+        .data_in({
+            data_west_in[8],
+            data_south_in[7], 
+            data_east_in[3],
+            data_from_les
+        }),
         .data_out(data_north_out[7]),
         .config_in(c_mux_north7)
     );
     
-    wire [6:0] w_inputs_for_north8 = {
-        data_west_in[9],
-        data_south_in[8], 
-        data_east_in[2],
-        data_from_les
-    };
     MultiplexerSBIC mux_north8(
-        .data_in(w_inputs_for_north8),
+        .data_in({
+            data_west_in[9],
+            data_south_in[8], 
+            data_east_in[2],
+            data_from_les
+        }),
         .data_out(data_north_out[8]),
         .config_in(c_mux_north8)
     );
     
-    wire [6:0] w_inputs_for_north9 = {
-        data_west_in[0],
-        data_south_in[9], 
-        data_east_in[1],
-        data_from_les
-    };
     MultiplexerSBIC mux_north9(
-        .data_in(w_inputs_for_north9),
+        .data_in({
+            data_west_in[0],
+            data_south_in[9], 
+            data_east_in[1],
+            data_from_les
+        }),
         .data_out(data_north_out[9]),
         .config_in(c_mux_north9)
     );
     
 
     // Side east
-    
-    wire [6:0] w_inputs_for_east0 = {
-        data_north_in[0],
-        data_west_in[0],
-        data_south_in[1],
-        data_from_les
-    };
     MultiplexerSBIC mux_east0(
-        .data_in(w_inputs_for_east0),
+        .data_in({
+            data_north_in[0],
+            data_west_in[0],
+            data_south_in[1],
+            data_from_les
+        }),
         .data_out(data_east_out[0]),
         .config_in(c_mux_east0)
     );
     
-    wire [6:0] w_inputs_for_east1 = {
-        data_north_in[9],
-        data_west_in[1],
-        data_south_in[2],
-        data_from_les
-    };
     MultiplexerSBIC mux_east1(
-        .data_in(w_inputs_for_east1),
+        .data_in({
+            data_north_in[9],
+            data_west_in[1],
+            data_south_in[2],
+            data_from_les
+        }),
         .data_out(data_east_out[1]),
         .config_in(c_mux_east1)
     );
     
-    wire [6:0] w_inputs_for_east2 = {
-        data_north_in[8],
-        data_west_in[2],
-        data_south_in[3],
-        data_from_les
-    };
     MultiplexerSBIC mux_east2(
-        .data_in(w_inputs_for_east2),
+        .data_in({
+            data_north_in[8],
+            data_west_in[2],
+            data_south_in[3],
+            data_from_les
+        }),
         .data_out(data_east_out[2]),
         .config_in(c_mux_east2)
     );
     
-    wire [6:0] w_inputs_for_east3 = {
-        data_north_in[7],
-        data_west_in[3],
-        data_south_in[4],
-        data_from_les
-    };
     MultiplexerSBIC mux_east3(
-        .data_in(w_inputs_for_east3),
+        .data_in({
+            data_north_in[7],
+            data_west_in[3],
+            data_south_in[4],
+            data_from_les
+        }),
         .data_out(data_east_out[3]),
         .config_in(c_mux_east3)
     );
     
-    wire [6:0] w_inputs_for_east4 = {
-        data_north_in[6],
-        data_west_in[4],
-        data_south_in[5],
-        data_from_les
-    };
     MultiplexerSBIC mux_east4(
-        .data_in(w_inputs_for_east4),
+        .data_in({
+            data_north_in[6],
+            data_west_in[4],
+            data_south_in[5],
+            data_from_les
+        }),
         .data_out(data_east_out[4]),
         .config_in(c_mux_east4)
     );
     
-    wire [6:0] w_inputs_for_east5 = {
-        data_north_in[5],
-        data_west_in[5],
-        data_south_in[6],
-        data_from_les
-    };
     MultiplexerSBIC mux_east5(
-        .data_in(w_inputs_for_east5),
+        .data_in({
+            data_north_in[5],
+            data_west_in[5],
+            data_south_in[6],
+            data_from_les
+        }),
         .data_out(data_east_out[5]),
         .config_in(c_mux_east5)
     );
     
-    wire [6:0] w_inputs_for_east6 = {
-        data_north_in[4],
-        data_west_in[6],
-        data_south_in[7],
-        data_from_les
-    };
     MultiplexerSBIC mux_east6(
-        .data_in(w_inputs_for_east6),
+        .data_in({
+            data_north_in[4],
+            data_west_in[6],
+            data_south_in[7],
+            data_from_les
+        }),
         .data_out(data_east_out[6]),
         .config_in(c_mux_east6)
     );
     
-    wire [6:0] w_inputs_for_east7 = {
-        data_north_in[3],
-        data_west_in[7],
-        data_south_in[8],
-        data_from_les
-    };
     MultiplexerSBIC mux_east7(
-        .data_in(w_inputs_for_east7),
+        .data_in({
+            data_north_in[3],
+            data_west_in[7],
+            data_south_in[8],
+            data_from_les
+        }),
         .data_out(data_east_out[7]),
         .config_in(c_mux_east7)
     );
     
-    wire [6:0] w_inputs_for_east8 = {
-        data_north_in[2],
-        data_west_in[8],
-        data_south_in[9],
-        data_from_les
-    };
     MultiplexerSBIC mux_east8(
-        .data_in(w_inputs_for_east8),
+        .data_in({
+            data_north_in[2],
+            data_west_in[8],
+            data_south_in[9],
+            data_from_les
+        }),
         .data_out(data_east_out[8]),
         .config_in(c_mux_east8)
     );
     
-    wire [6:0] w_inputs_for_east9 = {
-        data_north_in[1],
-        data_west_in[9],
-        data_south_in[0],
-        data_from_les
-    };
     MultiplexerSBIC mux_east9(
-        .data_in(w_inputs_for_east9),
+        .data_in({
+            data_north_in[1],
+            data_west_in[9],
+            data_south_in[0],
+            data_from_les
+        }),
         .data_out(data_east_out[9]),
         .config_in(c_mux_east9)
     );
     
 
     // Side south
-    
-    wire [6:0] w_inputs_for_south0 = {
-        data_east_in[1],
-        data_north_in[0],
-        data_west_in[8],
-        data_from_les
-    };
     MultiplexerSBIC mux_south0(
-        .data_in(w_inputs_for_south0),
+        .data_in({
+            data_east_in[1],
+            data_north_in[0],
+            data_west_in[8],
+            data_from_les
+        }),
         .data_out(data_south_out[0]),
         .config_in(c_mux_south0)
     );
     
-    wire [6:0] w_inputs_for_south1 = {
-        data_east_in[2],
-        data_north_in[1],
-        data_west_in[7],
-        data_from_les
-    };
     MultiplexerSBIC mux_south1(
-        .data_in(w_inputs_for_south1),
+        .data_in({
+            data_east_in[2],
+            data_north_in[1],
+            data_west_in[7],
+            data_from_les
+        }),
         .data_out(data_south_out[1]),
         .config_in(c_mux_south1)
     );
     
-    wire [6:0] w_inputs_for_south2 = {
-        data_east_in[3],
-        data_north_in[2],
-        data_west_in[6],
-        data_from_les
-    };
     MultiplexerSBIC mux_south2(
-        .data_in(w_inputs_for_south2),
+        .data_in({
+            data_east_in[3],
+            data_north_in[2],
+            data_west_in[6],
+            data_from_les
+        }),
         .data_out(data_south_out[2]),
         .config_in(c_mux_south2)
     );
     
-    wire [6:0] w_inputs_for_south3 = {
-        data_east_in[4],
-        data_north_in[3],
-        data_west_in[5],
-        data_from_les
-    };
     MultiplexerSBIC mux_south3(
-        .data_in(w_inputs_for_south3),
+        .data_in({
+            data_east_in[4],
+            data_north_in[3],
+            data_west_in[5],
+            data_from_les
+        }),
         .data_out(data_south_out[3]),
         .config_in(c_mux_south3)
     );
     
-    wire [6:0] w_inputs_for_south4 = {
-        data_east_in[5],
-        data_north_in[4],
-        data_west_in[4],
-        data_from_les
-    };
     MultiplexerSBIC mux_south4(
-        .data_in(w_inputs_for_south4),
+        .data_in({
+            data_east_in[5],
+            data_north_in[4],
+            data_west_in[4],
+            data_from_les
+        }),
         .data_out(data_south_out[4]),
         .config_in(c_mux_south4)
     );
     
-    wire [6:0] w_inputs_for_south5 = {
-        data_east_in[6],
-        data_north_in[5],
-        data_west_in[3],
-        data_from_les
-    };
     MultiplexerSBIC mux_south5(
-        .data_in(w_inputs_for_south5),
+        .data_in({
+            data_east_in[6],
+            data_north_in[5],
+            data_west_in[3],
+            data_from_les
+        }),
         .data_out(data_south_out[5]),
         .config_in(c_mux_south5)
     );
     
-    wire [6:0] w_inputs_for_south6 = {
-        data_east_in[7],
-        data_north_in[6],
-        data_west_in[2],
-        data_from_les
-    };
     MultiplexerSBIC mux_south6(
-        .data_in(w_inputs_for_south6),
+        .data_in({
+            data_east_in[7],
+            data_north_in[6],
+            data_west_in[2],
+            data_from_les
+        }),
         .data_out(data_south_out[6]),
         .config_in(c_mux_south6)
     );
     
-    wire [6:0] w_inputs_for_south7 = {
-        data_east_in[8],
-        data_north_in[7],
-        data_west_in[1],
-        data_from_les
-    };
     MultiplexerSBIC mux_south7(
-        .data_in(w_inputs_for_south7),
+        .data_in({
+            data_east_in[8],
+            data_north_in[7],
+            data_west_in[1],
+            data_from_les
+        }),
         .data_out(data_south_out[7]),
         .config_in(c_mux_south7)
     );
     
-    wire [6:0] w_inputs_for_south8 = {
-        data_east_in[9],
-        data_north_in[8],
-        data_west_in[0],
-        data_from_les
-    };
     MultiplexerSBIC mux_south8(
-        .data_in(w_inputs_for_south8),
+        .data_in({
+            data_east_in[9],
+            data_north_in[8],
+            data_west_in[0],
+            data_from_les
+        }),
         .data_out(data_south_out[8]),
         .config_in(c_mux_south8)
     );
     
-    wire [6:0] w_inputs_for_south9 = {
-        data_east_in[0],
-        data_north_in[9],
-        data_west_in[9],
-        data_from_les
-    };
     MultiplexerSBIC mux_south9(
-        .data_in(w_inputs_for_south9),
+        .data_in({
+            data_east_in[0],
+            data_north_in[9],
+            data_west_in[9],
+            data_from_les
+        }),
         .data_out(data_south_out[9]),
         .config_in(c_mux_south9)
     );
     
 
     // Side west
-    
-    wire [6:0] w_inputs_for_west0 = {
-        data_south_in[8],
-        data_east_in[0],
-        data_north_in[1],
-        data_from_les
-    };
     MultiplexerSBIC mux_west0(
-        .data_in(w_inputs_for_west0),
+        .data_in({
+            data_south_in[8],
+            data_east_in[0],
+            data_north_in[1],
+            data_from_les
+        }),
         .data_out(data_west_out[0]),
         .config_in(c_mux_west0)
     );
     
-    wire [6:0] w_inputs_for_west1 = {
-        data_south_in[7],
-        data_east_in[1],
-        data_north_in[2],
-        data_from_les
-    };
     MultiplexerSBIC mux_west1(
-        .data_in(w_inputs_for_west1),
+        .data_in({
+            data_south_in[7],
+            data_east_in[1],
+            data_north_in[2],
+            data_from_les
+        }),
         .data_out(data_west_out[1]),
         .config_in(c_mux_west1)
     );
     
-    wire [6:0] w_inputs_for_west2 = {
-        data_south_in[6],
-        data_east_in[2],
-        data_north_in[3],
-        data_from_les
-    };
     MultiplexerSBIC mux_west2(
-        .data_in(w_inputs_for_west2),
+        .data_in({
+            data_south_in[6],
+            data_east_in[2],
+            data_north_in[3],
+            data_from_les
+        }),
         .data_out(data_west_out[2]),
         .config_in(c_mux_west2)
     );
     
-    wire [6:0] w_inputs_for_west3 = {
-        data_south_in[5],
-        data_east_in[3],
-        data_north_in[4],
-        data_from_les
-    };
     MultiplexerSBIC mux_west3(
-        .data_in(w_inputs_for_west3),
+        .data_in({
+            data_south_in[5],
+            data_east_in[3],
+            data_north_in[4],
+            data_from_les
+        }),
         .data_out(data_west_out[3]),
         .config_in(c_mux_west3)
     );
     
-    wire [6:0] w_inputs_for_west4 = {
-        data_south_in[4],
-        data_east_in[4],
-        data_north_in[5],
-        data_from_les
-    };
     MultiplexerSBIC mux_west4(
-        .data_in(w_inputs_for_west4),
+        .data_in({
+            data_south_in[4],
+            data_east_in[4],
+            data_north_in[5],
+            data_from_les
+        }),
         .data_out(data_west_out[4]),
         .config_in(c_mux_west4)
     );
     
-    wire [6:0] w_inputs_for_west5 = {
-        data_south_in[3],
-        data_east_in[5],
-        data_north_in[6],
-        data_from_les
-    };
     MultiplexerSBIC mux_west5(
-        .data_in(w_inputs_for_west5),
+        .data_in({
+            data_south_in[3],
+            data_east_in[5],
+            data_north_in[6],
+            data_from_les
+        }),
         .data_out(data_west_out[5]),
         .config_in(c_mux_west5)
     );
     
-    wire [6:0] w_inputs_for_west6 = {
-        data_south_in[2],
-        data_east_in[6],
-        data_north_in[7],
-        data_from_les
-    };
     MultiplexerSBIC mux_west6(
-        .data_in(w_inputs_for_west6),
+        .data_in({
+            data_south_in[2],
+            data_east_in[6],
+            data_north_in[7],
+            data_from_les
+        }),
         .data_out(data_west_out[6]),
         .config_in(c_mux_west6)
     );
     
-    wire [6:0] w_inputs_for_west7 = {
-        data_south_in[1],
-        data_east_in[7],
-        data_north_in[8],
-        data_from_les
-    };
     MultiplexerSBIC mux_west7(
-        .data_in(w_inputs_for_west7),
+        .data_in({
+            data_south_in[1],
+            data_east_in[7],
+            data_north_in[8],
+            data_from_les
+        }),
         .data_out(data_west_out[7]),
         .config_in(c_mux_west7)
     );
     
-    wire [6:0] w_inputs_for_west8 = {
-        data_south_in[0],
-        data_east_in[8],
-        data_north_in[9],
-        data_from_les
-    };
     MultiplexerSBIC mux_west8(
-        .data_in(w_inputs_for_west8),
+        .data_in({
+            data_south_in[0],
+            data_east_in[8],
+            data_north_in[9],
+            data_from_les
+        }),
         .data_out(data_west_out[8]),
         .config_in(c_mux_west8)
     );
     
-    wire [6:0] w_inputs_for_west9 = {
-        data_south_in[9],
-        data_east_in[9],
-        data_north_in[0],
-        data_from_les
-    };
     MultiplexerSBIC mux_west9(
-        .data_in(w_inputs_for_west9),
+        .data_in({
+            data_south_in[9],
+            data_east_in[9],
+            data_north_in[0],
+            data_from_les
+        }),
         .data_out(data_west_out[9]),
         .config_in(c_mux_west9)
     );
     
 
     // Le 
-    wire [43:0] w_inputs_for_les = {data_north_in, data_east_in, data_south_in, data_west_in, data_from_les};
     
     MultiplexerSBLE mux_le0_i0(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[0]),
         .config_in(c_mux_le0_i0)
     );
-    
+
     MultiplexerSBLE mux_le0_i1(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[1]),
         .config_in(c_mux_le0_i1)
     );
-    
+
     MultiplexerSBLE mux_le0_i2(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[2]),
         .config_in(c_mux_le0_i2)
     );
-    
+
     MultiplexerSBLE mux_le0_i3(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[3]),
         .config_in(c_mux_le0_i3)
     );
-    
+
     MultiplexerSBLE mux_le0_i4(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[4]),
         .config_in(c_mux_le0_i4)
     );
-    
+
     MultiplexerSBLE mux_le0_i5(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[5]),
         .config_in(c_mux_le0_i5)
     );
-    
+
     MultiplexerSBLE mux_le1_i0(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[6]),
         .config_in(c_mux_le1_i0)
     );
-    
+
     MultiplexerSBLE mux_le1_i1(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[7]),
         .config_in(c_mux_le1_i1)
     );
-    
+
     MultiplexerSBLE mux_le1_i2(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[8]),
         .config_in(c_mux_le1_i2)
     );
-    
+
     MultiplexerSBLE mux_le1_i3(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[9]),
         .config_in(c_mux_le1_i3)
     );
-    
+
     MultiplexerSBLE mux_le1_i4(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[10]),
         .config_in(c_mux_le1_i4)
     );
-    
+
     MultiplexerSBLE mux_le1_i5(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[11]),
         .config_in(c_mux_le1_i5)
     );
-    
+
     MultiplexerSBLE mux_le2_i0(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[12]),
         .config_in(c_mux_le2_i0)
     );
-    
+
     MultiplexerSBLE mux_le2_i1(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[13]),
         .config_in(c_mux_le2_i1)
     );
-    
+
     MultiplexerSBLE mux_le2_i2(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[14]),
         .config_in(c_mux_le2_i2)
     );
-    
+
     MultiplexerSBLE mux_le2_i3(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[15]),
         .config_in(c_mux_le2_i3)
     );
-    
+
     MultiplexerSBLE mux_le2_i4(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[16]),
         .config_in(c_mux_le2_i4)
     );
-    
+
     MultiplexerSBLE mux_le2_i5(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[17]),
         .config_in(c_mux_le2_i5)
     );
-    
+
     MultiplexerSBLE mux_le3_i0(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[18]),
         .config_in(c_mux_le3_i0)
     );
-    
+
     MultiplexerSBLE mux_le3_i1(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[19]),
         .config_in(c_mux_le3_i1)
     );
-    
+
     MultiplexerSBLE mux_le3_i2(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[20]),
         .config_in(c_mux_le3_i2)
     );
-    
+
     MultiplexerSBLE mux_le3_i3(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[21]),
         .config_in(c_mux_le3_i3)
     );
-    
+
     MultiplexerSBLE mux_le3_i4(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[22]),
         .config_in(c_mux_le3_i4)
     );
-    
+
     MultiplexerSBLE mux_le3_i5(
-        .data_in(w_inputs_for_les),
+        .data_in({ 
+            data_north_in,
+            data_east_in,
+            data_south_in,
+            data_west_in,
+            data_from_les
+        }),
         .data_out(data_to_les[23]),
         .config_in(c_mux_le3_i5)
     );
-    
+
 
 endmodule
