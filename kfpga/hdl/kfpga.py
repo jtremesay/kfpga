@@ -120,6 +120,32 @@ class LogicTileModule(Module):
         self.add_config("switchbox", sb.config.width)
 
 
+class TileTopModule(Module):
+    def __init__(self, csr: ShiftRegister, name: str, library: Library) -> None:
+        super().__init__(name, library)
+        self.set_config_chain()
+        self.csr = csr
+
+
+class LogicTileTopModule(TileTopModule):
+    def __init__(
+        self,
+        interconnect_pairs_count: int,
+        cluster_size: int,
+        lut_size: int,
+        library: Library,
+    ) -> None:
+        super().__init__(library.get_module("LogicTileConfig"), "LogicTileTop", library)
+        self.cluster_size = cluster_size
+        self.lut_size = lut_size
+
+        for side in ("north", "east", "south", "west"):
+            self.add_data_input("data_{}_in".format(side), interconnect_pairs_count)
+            self.add_data_output("data_{}_out".format(side), interconnect_pairs_count)
+        self.set_clock()
+        self.set_nreset()
+
+
 class LogicColumnModule(Module):
     def __init__(
         self,
@@ -453,6 +479,14 @@ def create_kfpga_library(
         interconnect_pairs_count, cluster_size, lut_size, library
     )
     library.add_module(t_module)
+
+    tc_module = ShiftRegister(t_module.config.width, library, name="LogicTileConfig")
+    library.add_module(tc_module)
+
+    tt_module = LogicTileTopModule(
+        interconnect_pairs_count, cluster_size, lut_size, library
+    )
+    library.add_module(tt_module)
 
     c_module = LogicColumnModule(height, interconnect_pairs_count, library)
     library.add_module(c_module)

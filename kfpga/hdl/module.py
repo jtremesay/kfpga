@@ -72,6 +72,16 @@ class Module:
         port = Port("nreset", Port.Direction.input, 1)
         self.add_port(port)
 
+    def set_config_chain(self) -> None:
+        port = Port("config_in", Port.Direction.input, 1)
+        self.add_port(port)
+        port = Port("config_out", Port.Direction.output, 1)
+        self.add_port(port)
+        port = Port("config_enable", Port.Direction.input, 1)
+        self.add_port(port)
+        port = Port("config_nreset", Port.Direction.input, 1)
+        self.add_port(port)
+
     def template_ctx(self) -> Mapping[str, Any]:
         return {"module": self}
 

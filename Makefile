@@ -8,6 +8,8 @@ verilog_files ?= \
 	rtl/$(target_core)/MultiplexerSBLE.v \
 	rtl/$(target_core)/SwitchBox.v \
 	rtl/$(target_core)/LogicTile.v \
+	rtl/$(target_core)/LogicTileConfig.v \
+	rtl/$(target_core)/LogicTileTop.v \
 	rtl/$(target_core)/LogicColumn.v \
 	rtl/$(target_core)/LogicGrid.v \
 	rtl/$(target_core)/MultiplexerIOIC.v \
