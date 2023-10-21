@@ -1,8 +1,9 @@
 module LogicElement(
-    input [5:0] data_in,
-    output data_out,
     input clock,
     input nreset,
+    input enable,
+    input [5:0] data_in,
+    output data_out,
     input [64:0] config_in
 );
     // Dispatch the config 
@@ -22,7 +23,7 @@ module LogicElement(
     always @(posedge clock) begin
         if (!nreset) begin
             lut_z_seq <= 0;
-        end else begin
+        end else if (enable) begin
             lut_z_seq <= lut_z;
         end
     end

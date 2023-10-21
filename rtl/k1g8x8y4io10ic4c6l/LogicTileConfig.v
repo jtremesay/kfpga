@@ -1,9 +1,9 @@
 module LogicTileConfig(
-    input data_in,
-    output [523:0] data_out,
     input clock,
+    input nreset,
     input enable,
-    input nreset
+    input data_in,
+    output [523:0] data_out
 );
     reg [523:0] r_data;
     always @(posedge clock) begin

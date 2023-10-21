@@ -13,7 +13,7 @@
     always @(posedge clock) begin
         if (!nreset) begin
             lut_z_seq <= 0;
-        end else begin
+        end else if (enable) begin
             lut_z_seq <= lut_z;
         end
     end

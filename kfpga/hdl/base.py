@@ -2,10 +2,10 @@ import math
 from typing import Optional
 
 from .library import Library
-from .module import Module
+from .module import ConfigurableModuleMixin, Module, SequentialModuleMixin
 
 
-class MultiplexerModule(Module):
+class MultiplexerModule(ConfigurableModuleMixin, Module):
     def __init__(self, size: int, library: Library, name: Optional[str] = None) -> None:
         if size < 2:
             raise ValueError("Minimal mux size is 2, asked: {}".format(size))
@@ -22,7 +22,7 @@ class MultiplexerModule(Module):
         return "verilog/base/Multiplexer.v"
 
 
-class ShiftRegister(Module):
+class ShiftRegister(SequentialModuleMixin, Module):
     def __init__(
         self, width: int, library: Library, name: Optional[str] = None
     ) -> None:
@@ -34,9 +34,6 @@ class ShiftRegister(Module):
 
         self.add_data_input("data_in")
         self.add_data_output("data_out", self.width)
-        self.set_clock()
-        self.set_enable()
-        self.set_nreset()
 
     def template_name(self) -> str:
         return "verilog/base/ShiftRegister.v"

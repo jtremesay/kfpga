@@ -3,6 +3,9 @@ module LogicTileTop(
     output config_out,
     input config_enable,
     input config_nreset,
+    input clock,
+    input nreset,
+    input enable,
     input [5:0] data_north_in,
     output [5:0] data_north_out,
     input [5:0] data_east_in,
@@ -10,9 +13,7 @@ module LogicTileTop(
     input [5:0] data_south_in,
     output [5:0] data_south_out,
     input [5:0] data_west_in,
-    output [5:0] data_west_out,
-    input clock,
-    input nreset
+    output [5:0] data_west_out
 );
     // Instantiate the config shift register
     wire [145:0] config_data;
@@ -36,6 +37,7 @@ module LogicTileTop(
         .data_west_out(data_west_out),
         .clock(clock),
         .nreset(nreset),
+        .enable(enable),
         .config_in(config_data),
     );
 endmodule

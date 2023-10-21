@@ -1,17 +1,17 @@
-module ConfigShiftRegister(
-    input data_in,
-    output [34687:0] data_out,
+module IOTileConfig(
     input clock,
+    input nreset,
     input enable,
-    input nreset
+    input data_in,
+    output [35:0] data_out
 );
-    reg [34687:0] r_data;
+    reg [35:0] r_data;
     always @(posedge clock) begin
         if (!nreset) begin
             r_data <= 0;
         end else begin
             if (enable) begin
-                r_data <= {r_data[34686:0], data_in};
+                r_data <= {r_data[34:0], data_in};
             end
         end
     end

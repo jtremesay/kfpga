@@ -1,4 +1,7 @@
 module LogicTile(
+    input clock,
+    input nreset,
+    input enable,
     input [5:0] data_north_in,
     output [5:0] data_north_out,
     input [5:0] data_east_in,
@@ -7,8 +10,6 @@ module LogicTile(
     output [5:0] data_south_out,
     input [5:0] data_west_in,
     output [5:0] data_west_out,
-    input clock,
-    input nreset,
     input [145:0] config_in
 );
     // Dispatch the config 
@@ -44,6 +45,7 @@ module LogicTile(
             .data_out(w_from_les[i]),
             .clock(clock),
             .nreset(nreset),
+            .enable(enable),
             .config_in(c_les[i])
         );
     end

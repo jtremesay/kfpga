@@ -10,16 +10,15 @@ verilog_files ?= \
 	rtl/$(target_core)/LogicTile.v \
 	rtl/$(target_core)/LogicTileConfig.v \
 	rtl/$(target_core)/LogicTileTop.v \
-	rtl/$(target_core)/LogicColumn.v \
-	rtl/$(target_core)/LogicGrid.v \
 	rtl/$(target_core)/MultiplexerIOIC.v \
 	rtl/$(target_core)/MultiplexerIOIO.v \
 	rtl/$(target_core)/IOTile.v \
-	rtl/$(target_core)/IOLine.v \
-	rtl/$(target_core)/IOColumn.v \
-	rtl/$(target_core)/kFPGACore.v \
-	rtl/$(target_core)/ConfigShiftRegister.v \
-	rtl/$(target_core)/kFPGACoreTop.v
+	rtl/$(target_core)/IOTileConfig.v \
+	rtl/$(target_core)/NorthIOTileTop.v \
+	rtl/$(target_core)/EastIOTileTop.v \
+	rtl/$(target_core)/SouthIOTileTop.v \
+	rtl/$(target_core)/WestIOTileTop.v \
+	rtl/$(target_core)/kFPGACore.v
 
 all: synth
 

@@ -1,6 +1,7 @@
 {% extends "verilog/base/Module.v" %}
 
 {% block body %}
+{#
     // Declare the data wire used by the grid 
     wire [{{ module.interconnect_pairs_count * module.width -1 }}:0] grid_north_in;
     wire [{{ module.interconnect_pairs_count * module.width -1 }}:0] grid_north_out;
@@ -58,4 +59,5 @@
         .nreset(nreset),
         .config_in(c_grid)
     );
+    #}
 {% endblock  %}

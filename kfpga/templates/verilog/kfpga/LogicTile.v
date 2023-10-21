@@ -28,6 +28,7 @@
             .data_out(w_from_les[i]),
             .clock(clock),
             .nreset(nreset),
+            .enable(enable),
             .config_in(c_les[i])
         );
     end

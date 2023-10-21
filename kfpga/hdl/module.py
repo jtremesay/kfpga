@@ -52,36 +52,6 @@ class Module:
         port = Port(name, Port.Direction.output, width)
         self.add_port(port)
 
-    def add_config(self, name: str, width: Optional[int] = 1, count=1) -> None:
-        config = ConfigByte(name, width, count)
-        self.config.add_config(config)
-
-        if self.config_port is None:
-            self.config_port = ConfigPort(self.config)
-            self.add_port(self.config_port)
-
-    def set_clock(self) -> None:
-        port = Port("clock", Port.Direction.input, 1)
-        self.add_port(port)
-
-    def set_enable(self) -> None:
-        port = Port("enable", Port.Direction.input, 1)
-        self.add_port(port)
-
-    def set_nreset(self) -> None:
-        port = Port("nreset", Port.Direction.input, 1)
-        self.add_port(port)
-
-    def set_config_chain(self) -> None:
-        port = Port("config_in", Port.Direction.input, 1)
-        self.add_port(port)
-        port = Port("config_out", Port.Direction.output, 1)
-        self.add_port(port)
-        port = Port("config_enable", Port.Direction.input, 1)
-        self.add_port(port)
-        port = Port("config_nreset", Port.Direction.input, 1)
-        self.add_port(port)
-
     def template_ctx(self) -> Mapping[str, Any]:
         return {"module": self}
 
@@ -103,3 +73,52 @@ class Module:
 
         with output_file.open("w") as f:
             self.write_verilog_stream(f)
+
+
+class SequentialModuleMixin(Module):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.set_clock()
+        self.set_nreset()
+        self.set_enable()
+
+    def set_clock(self) -> None:
+        port = Port("clock", Port.Direction.input, 1)
+        self.add_port(port)
+
+    def set_enable(self) -> None:
+        port = Port("enable", Port.Direction.input, 1)
+        self.add_port(port)
+
+    def set_nreset(self) -> None:
+        port = Port("nreset", Port.Direction.input, 1)
+        self.add_port(port)
+
+
+class ConfigurableModuleMixin(Module):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+
+    def add_config(self, name: str, width: Optional[int] = 1, count=1) -> None:
+        config = ConfigByte(name, width, count)
+        self.config.add_config(config)
+
+        if self.config_port is None:
+            self.config_port = ConfigPort(self.config)
+            self.add_port(self.config_port)
+
+
+class ConfigChainModuleMixin(Module):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.set_config_chain()
+
+    def set_config_chain(self) -> None:
+        port = Port("config_in", Port.Direction.input, 1)
+        self.add_port(port)
+        port = Port("config_out", Port.Direction.output, 1)
+        self.add_port(port)
+        port = Port("config_enable", Port.Direction.input, 1)
+        self.add_port(port)
+        port = Port("config_nreset", Port.Direction.input, 1)
+        self.add_port(port)

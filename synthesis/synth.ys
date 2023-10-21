@@ -1,1 +1,1 @@
-synth_xilinx -top LogicTileTop -flatten
+synth_xilinx -top kFPGACore -flatten
