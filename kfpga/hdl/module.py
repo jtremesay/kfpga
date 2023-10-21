@@ -118,6 +118,8 @@ class ConfigChainModuleMixin(Module):
         self.add_port(port)
         port = Port("config_out", Port.Direction.output, 1)
         self.add_port(port)
+        port = Port("config_clock", Port.Direction.input, 1)
+        self.add_port(port)
         port = Port("config_enable", Port.Direction.input, 1)
         self.add_port(port)
         port = Port("config_nreset", Port.Direction.input, 1)

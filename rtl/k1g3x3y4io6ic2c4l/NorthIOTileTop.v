@@ -1,11 +1,9 @@
 module NorthIOTileTop(
     input config_in,
     output config_out,
+    input config_clock,
     input config_enable,
     input config_nreset,
-    input clock,
-    input nreset,
-    input enable,
     input [3:0] data_from_io,
     output [3:0] data_to_io,
     input [5:0] data_from_ic,
@@ -16,7 +14,7 @@ module NorthIOTileTop(
     IOTileConfig config_sr(
         .data_in(config_in),
         .data_out(config_data),
-        .clock(clock),
+        .clock(config_clock),
         .enable(config_enable),
         .nreset(config_nreset),
     );

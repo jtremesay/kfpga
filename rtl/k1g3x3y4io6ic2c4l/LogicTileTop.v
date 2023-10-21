@@ -1,6 +1,7 @@
 module LogicTileTop(
     input config_in,
     output config_out,
+    input config_clock,
     input config_enable,
     input config_nreset,
     input clock,
@@ -20,7 +21,7 @@ module LogicTileTop(
     LogicTileConfig config_sr(
         .data_in(config_in),
         .data_out(config_data),
-        .clock(clock),
+        .clock(config_clock),
         .enable(config_enable),
         .nreset(config_nreset),
     );

@@ -181,7 +181,7 @@ class IOTileModule(ConfigurableModuleMixin, Module):
             self.add_config("mux_io{}".format(i), mux_io.config.width)
 
 
-class IOTileTopModule(SequentialModuleMixin, ConfigChainModuleMixin, TileTopModule):
+class IOTileTopModule(ConfigChainModuleMixin, TileTopModule):
     def __init__(
         self,
         side: str,
