@@ -12,10 +12,11 @@ module LogicTile(
     input [523:0] config_in
 );
     // Dispatch the config 
-    wire [64:0] c_le0 = config_in[64:0]; 
-    wire [64:0] c_le1 = config_in[129:65]; 
-    wire [64:0] c_le2 = config_in[194:130]; 
-    wire [64:0] c_le3 = config_in[259:195]; 
+    wire [64:0] c_les [3:0];
+    assign c_les[0] = config_in[64:0];
+    assign c_les[1] = config_in[129:65];
+    assign c_les[2] = config_in[194:130];
+    assign c_les[3] = config_in[259:195]; 
     wire [263:0] c_switchbox = config_in[523:260];
 
     // Connection used between the logic element and the switchbox
@@ -38,36 +39,14 @@ module LogicTile(
     );
 
     // Instantiate the logic elemenets
-    LogicElement el0(
-        .data_in(w_to_les[5:0]),
-        .data_out(w_from_les[0]),
-        .clock(clock),
-        .nreset(nreset),
-        .config_in(c_le0)
-    );
-
-    LogicElement el1(
-        .data_in(w_to_les[11:6]),
-        .data_out(w_from_les[1]),
-        .clock(clock),
-        .nreset(nreset),
-        .config_in(c_le1)
-    );
-
-    LogicElement el2(
-        .data_in(w_to_les[17:12]),
-        .data_out(w_from_les[2]),
-        .clock(clock),
-        .nreset(nreset),
-        .config_in(c_le2)
-    );
-
-    LogicElement el3(
-        .data_in(w_to_les[23:18]),
-        .data_out(w_from_les[3]),
-        .clock(clock),
-        .nreset(nreset),
-        .config_in(c_le3)
-    );
-
+    genvar i;
+    for (i = 0; i < 4; i = i + 1) begin
+        LogicElement el(
+            .data_in(w_to_les[(i + 1) * 6 - 1:i * 6]),
+            .data_out(w_from_les[i]),
+            .clock(clock),
+            .nreset(nreset),
+            .config_in(c_les[i])
+        );
+    end
 endmodule

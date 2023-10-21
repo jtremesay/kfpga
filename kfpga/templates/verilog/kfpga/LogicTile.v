@@ -21,13 +21,14 @@
     );
 
     // Instantiate the logic elemenets
-{%- for i in range(module.cluster_size) %}
-    LogicElement el{{ i }}(
-        .data_in(w_to_les[{{ (i + 1) * module.lut_size - 1 }}:{{ i * module.lut_size }}]),
-        .data_out(w_from_les[{{ i }}]),
-        .clock(clock),
-        .nreset(nreset),
-        .config_in(c_le{{ i }})
-    );
-{% endfor %}
+    genvar i;
+    for (i = 0; i < {{ module.cluster_size }}; i = i + 1) begin
+        LogicElement el(
+            .data_in(w_to_les[(i + 1) * {{ module.lut_size }} - 1:i * {{ module.lut_size }}]),
+            .data_out(w_from_les[i]),
+            .clock(clock),
+            .nreset(nreset),
+            .config_in(c_les[i])
+        );
+    end
 {%- endblock  %}

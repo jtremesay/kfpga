@@ -114,8 +114,7 @@ class LogicTileModule(Module):
         self.set_nreset()
 
         le = library.get_module("LogicElement")
-        for i in range(self.cluster_size):
-            self.add_config("le{}".format(i), le.config.width)
+        self.add_config("les", le.config.width, cluster_size)
 
         sb = library.get_module("SwitchBox")
         self.add_config("switchbox", sb.config.width)
