@@ -8,7 +8,7 @@
         .config_in(c_lut)
     );
 
-    // Register the output of the lut
+    // Register the output of the LUT
     reg lut_z_seq;
     always @(posedge clock) begin
         if (!nreset) begin
