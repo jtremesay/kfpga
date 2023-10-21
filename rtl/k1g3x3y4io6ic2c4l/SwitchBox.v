@@ -45,6 +45,10 @@ module SwitchBox(
     wire [4:0] c_mux_le1_i2 = config_in[106:102]; 
     wire [4:0] c_mux_le1_i3 = config_in[111:107];
 
+    // Use Wilton switchbox
+    // https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.44.4925&rep=rep1&type=pdf
+    // 6.1.2: Logic Resources, p103
+
     // Side north
     
     wire [4:0] w_inputs_for_north0 = {

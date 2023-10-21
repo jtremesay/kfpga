@@ -26,7 +26,6 @@ synth: build $(netlist_file)
 build:
 	mkdir -p $@
 
-
 $(netlist_file): $(verilog_files)
 	yosys -Q -l logs/synthesis.$(target_core).log -s synthesis/synth.ys -o $@ $^
 
