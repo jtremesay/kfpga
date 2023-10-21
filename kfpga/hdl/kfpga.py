@@ -77,9 +77,7 @@ class SwitchBoxModule(Module):
             )
 
         mux_le = library.get_module("MultiplexerSBLE")
-        for c in range(cluster_size):
-            for i in range(lut_size):
-                self.add_config("mux_le{}_i{}".format(c, i), mux_le.config.width)
+        self.add_config("mux_le", mux_le.config.width, cluster_size * lut_size)
 
 
 class LogicTileModule(Module):

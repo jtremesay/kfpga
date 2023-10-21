@@ -56,30 +56,31 @@ module SwitchBox(
     assign c_mux_west[7] = config_in[113:111];
     assign c_mux_west[8] = config_in[116:114];
     assign c_mux_west[9] = config_in[119:117]; 
-    wire [5:0] c_mux_le0_i0 = config_in[125:120]; 
-    wire [5:0] c_mux_le0_i1 = config_in[131:126]; 
-    wire [5:0] c_mux_le0_i2 = config_in[137:132]; 
-    wire [5:0] c_mux_le0_i3 = config_in[143:138]; 
-    wire [5:0] c_mux_le0_i4 = config_in[149:144]; 
-    wire [5:0] c_mux_le0_i5 = config_in[155:150]; 
-    wire [5:0] c_mux_le1_i0 = config_in[161:156]; 
-    wire [5:0] c_mux_le1_i1 = config_in[167:162]; 
-    wire [5:0] c_mux_le1_i2 = config_in[173:168]; 
-    wire [5:0] c_mux_le1_i3 = config_in[179:174]; 
-    wire [5:0] c_mux_le1_i4 = config_in[185:180]; 
-    wire [5:0] c_mux_le1_i5 = config_in[191:186]; 
-    wire [5:0] c_mux_le2_i0 = config_in[197:192]; 
-    wire [5:0] c_mux_le2_i1 = config_in[203:198]; 
-    wire [5:0] c_mux_le2_i2 = config_in[209:204]; 
-    wire [5:0] c_mux_le2_i3 = config_in[215:210]; 
-    wire [5:0] c_mux_le2_i4 = config_in[221:216]; 
-    wire [5:0] c_mux_le2_i5 = config_in[227:222]; 
-    wire [5:0] c_mux_le3_i0 = config_in[233:228]; 
-    wire [5:0] c_mux_le3_i1 = config_in[239:234]; 
-    wire [5:0] c_mux_le3_i2 = config_in[245:240]; 
-    wire [5:0] c_mux_le3_i3 = config_in[251:246]; 
-    wire [5:0] c_mux_le3_i4 = config_in[257:252]; 
-    wire [5:0] c_mux_le3_i5 = config_in[263:258];
+    wire [5:0] c_mux_le [23:0];
+    assign c_mux_le[0] = config_in[125:120];
+    assign c_mux_le[1] = config_in[131:126];
+    assign c_mux_le[2] = config_in[137:132];
+    assign c_mux_le[3] = config_in[143:138];
+    assign c_mux_le[4] = config_in[149:144];
+    assign c_mux_le[5] = config_in[155:150];
+    assign c_mux_le[6] = config_in[161:156];
+    assign c_mux_le[7] = config_in[167:162];
+    assign c_mux_le[8] = config_in[173:168];
+    assign c_mux_le[9] = config_in[179:174];
+    assign c_mux_le[10] = config_in[185:180];
+    assign c_mux_le[11] = config_in[191:186];
+    assign c_mux_le[12] = config_in[197:192];
+    assign c_mux_le[13] = config_in[203:198];
+    assign c_mux_le[14] = config_in[209:204];
+    assign c_mux_le[15] = config_in[215:210];
+    assign c_mux_le[16] = config_in[221:216];
+    assign c_mux_le[17] = config_in[227:222];
+    assign c_mux_le[18] = config_in[233:228];
+    assign c_mux_le[19] = config_in[239:234];
+    assign c_mux_le[20] = config_in[245:240];
+    assign c_mux_le[21] = config_in[251:246];
+    assign c_mux_le[22] = config_in[257:252];
+    assign c_mux_le[23] = config_in[263:258];
 
     // Use Wilton switchbox
     // https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.44.4925&rep=rep1&type=pdf
@@ -143,295 +144,20 @@ module SwitchBox(
     end
 
     // Le 
-    
-    
-    MultiplexerSBLE mux_le0_i0(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[0]),
-        .config_in(c_mux_le0_i0)
-    );
-
-    MultiplexerSBLE mux_le0_i1(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[1]),
-        .config_in(c_mux_le0_i1)
-    );
-
-    MultiplexerSBLE mux_le0_i2(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[2]),
-        .config_in(c_mux_le0_i2)
-    );
-
-    MultiplexerSBLE mux_le0_i3(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[3]),
-        .config_in(c_mux_le0_i3)
-    );
-
-    MultiplexerSBLE mux_le0_i4(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[4]),
-        .config_in(c_mux_le0_i4)
-    );
-
-    MultiplexerSBLE mux_le0_i5(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[5]),
-        .config_in(c_mux_le0_i5)
-    );
-
-    MultiplexerSBLE mux_le1_i0(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[6]),
-        .config_in(c_mux_le1_i0)
-    );
-
-    MultiplexerSBLE mux_le1_i1(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[7]),
-        .config_in(c_mux_le1_i1)
-    );
-
-    MultiplexerSBLE mux_le1_i2(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[8]),
-        .config_in(c_mux_le1_i2)
-    );
-
-    MultiplexerSBLE mux_le1_i3(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[9]),
-        .config_in(c_mux_le1_i3)
-    );
-
-    MultiplexerSBLE mux_le1_i4(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[10]),
-        .config_in(c_mux_le1_i4)
-    );
-
-    MultiplexerSBLE mux_le1_i5(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[11]),
-        .config_in(c_mux_le1_i5)
-    );
-
-    MultiplexerSBLE mux_le2_i0(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[12]),
-        .config_in(c_mux_le2_i0)
-    );
-
-    MultiplexerSBLE mux_le2_i1(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[13]),
-        .config_in(c_mux_le2_i1)
-    );
-
-    MultiplexerSBLE mux_le2_i2(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[14]),
-        .config_in(c_mux_le2_i2)
-    );
-
-    MultiplexerSBLE mux_le2_i3(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[15]),
-        .config_in(c_mux_le2_i3)
-    );
-
-    MultiplexerSBLE mux_le2_i4(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[16]),
-        .config_in(c_mux_le2_i4)
-    );
-
-    MultiplexerSBLE mux_le2_i5(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[17]),
-        .config_in(c_mux_le2_i5)
-    );
-
-    MultiplexerSBLE mux_le3_i0(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[18]),
-        .config_in(c_mux_le3_i0)
-    );
-
-    MultiplexerSBLE mux_le3_i1(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[19]),
-        .config_in(c_mux_le3_i1)
-    );
-
-    MultiplexerSBLE mux_le3_i2(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[20]),
-        .config_in(c_mux_le3_i2)
-    );
-
-    MultiplexerSBLE mux_le3_i3(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[21]),
-        .config_in(c_mux_le3_i3)
-    );
-
-    MultiplexerSBLE mux_le3_i4(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[22]),
-        .config_in(c_mux_le3_i4)
-    );
-
-    MultiplexerSBLE mux_le3_i5(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[23]),
-        .config_in(c_mux_le3_i5)
-    );
-
+    for (i = 0; i < 4; i = i + 1) begin
+        for (j = 0; j < 6; j = j + 1 ) begin
+            MultiplexerSBLE mux_le(
+                .data_in({ 
+                    data_north_in,
+                    data_east_in,
+                    data_south_in,
+                    data_west_in,
+                    data_from_les
+                }),
+                .data_out(data_to_les[i * 6 + j]),
+                .config_in(c_mux_le[i][j])
+            );
+        end
+    end
 
 endmodule

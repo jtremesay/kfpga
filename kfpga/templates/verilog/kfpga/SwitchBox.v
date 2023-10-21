@@ -63,7 +63,6 @@
     end
 
     // Le 
-    {#
     for (i = 0; i < {{ module.cluster_size }}; i = i + 1) begin
         for (j = 0; j < {{ module.lut_size }}; j = j + 1 ) begin
             MultiplexerSBLE mux_le(
@@ -79,18 +78,4 @@
             );
         end
     end
-    #}
-    {% for c in range(module.cluster_size) %}{% for i in range(module.lut_size) %}
-    MultiplexerSBLE mux_le{{ c }}_i{{ i }}(
-        .data_in({ 
-            data_north_in,
-            data_east_in,
-            data_south_in,
-            data_west_in,
-            data_from_les
-        }),
-        .data_out(data_to_les[{{ c * module.lut_size + i }}]),
-        .config_in(c_mux_le{{ c }}_i{{ i}})
-    );
-{% endfor %}{% endfor%}
 {% endblock  %}
