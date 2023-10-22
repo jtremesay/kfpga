@@ -2,3 +2,8 @@
 /logs/
 /venv/
 *.pyc
+/.Xil/
+/devboard/devboard.cache/
+vivado_pid*.str
+vivado.jou
+vivado.log
