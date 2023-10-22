@@ -4,6 +4,10 @@
 *.pyc
 /.Xil/
 /devboard/devboard.cache/
+/devboard/devboard.runs/
+/devboard/devboard.srcs/utils_*/
 vivado_pid*.str
 vivado.jou
 vivado.log
+vivado_*.backup.jou
+vivado_*.backup.log
