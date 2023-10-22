@@ -13,6 +13,6 @@
         .clock(clock),
         .nreset(nreset),
         .enable(enable),
-        .config_in(config_data),
+        .config_in(config_data)
     );
 {%- endblock  %}

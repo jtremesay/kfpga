@@ -23,7 +23,7 @@ module LogicTileTop(
         .data_out(config_data),
         .clock(config_clock),
         .enable(config_enable),
-        .nreset(config_nreset),
+        .nreset(config_nreset)
     );
     assign config_out = config_data[145];
 
@@ -39,6 +39,6 @@ module LogicTileTop(
         .clock(clock),
         .nreset(nreset),
         .enable(enable),
-        .config_in(config_data),
+        .config_in(config_data)
     );
 endmodule

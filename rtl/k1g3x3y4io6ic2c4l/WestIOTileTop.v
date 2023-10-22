@@ -16,7 +16,7 @@ module WestIOTileTop(
         .data_out(config_data),
         .clock(config_clock),
         .enable(config_enable),
-        .nreset(config_nreset),
+        .nreset(config_nreset)
     );
     assign config_out = config_data[23];
 
@@ -25,6 +25,6 @@ module WestIOTileTop(
         .data_to_io(data_to_io),
         .data_from_ic(data_from_ic),
         .data_to_ic(data_to_ic),
-        .config_in(config_data),
+        .config_in(config_data)
     );
 endmodule

@@ -6,6 +6,6 @@
         .data_to_io(data_to_io),
         .data_from_ic(data_from_ic),
         .data_to_ic(data_to_ic),
-        .config_in(config_data),
+        .config_in(config_data)
     );
 {%- endblock  %}
