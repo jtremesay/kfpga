@@ -31,7 +31,7 @@ module kFPGACore(
             .config_in(lt_config_out[2][x]),
             .config_out(north_io_config_out[x]),
             .config_clock(config_clock),
-            .config_enable(config_nreset),
+            .config_enable(config_enable),
             .config_nreset(config_nreset)
         );
     end
@@ -50,7 +50,7 @@ module kFPGACore(
             .config_in(y == 0 ? north_io_config_out[2] : east_io_config_out[y - 1]),
             .config_out(east_io_config_out[y]),
             .config_clock(config_clock),
-            .config_enable(config_nreset),
+            .config_enable(config_enable),
             .config_nreset(config_nreset)
         );
     end
@@ -70,7 +70,7 @@ module kFPGACore(
             .config_in(x == 0 ? east_io_config_out[2] : north_io_config_out[x - 1]),
             .config_out(south_io_config_out[x]),
             .config_clock(config_clock),
-            .config_enable(config_nreset),
+            .config_enable(config_enable),
             .config_nreset(config_nreset)
         );
     end
@@ -89,7 +89,7 @@ module kFPGACore(
             .config_in(y == 0 ? config_in : west_io_config_out[y - 1]),
             .config_out(west_io_config_out[y]),
             .config_clock(config_clock),
-            .config_enable(config_nreset),
+            .config_enable(config_enable),
             .config_nreset(config_nreset)
         );
     end
@@ -114,10 +114,10 @@ module kFPGACore(
                 .clock(clock),
                 .nreset(nreset),
                 .enable(enable),
-                .config_in(y == 0 ? south_io_config_out[x] : lt_config_out[(y - 1) * 3 + x]),
+                .config_in(y == 0 ? south_io_config_out[x] : lt_config_out[y - 1][x]),
                 .config_out(lt_config_out[y][x]),
                 .config_clock(config_clock),
-                .config_enable(config_nreset),
+                .config_enable(config_enable),
                 .config_nreset(config_nreset)
             );
         end

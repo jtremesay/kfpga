@@ -16,7 +16,7 @@
             .config_in(lt_config_out[{{ module.height - 1 }}][x]),
             .config_out(north_io_config_out[x]),
             .config_clock(config_clock),
-            .config_enable(config_nreset),
+            .config_enable(config_enable),
             .config_nreset(config_nreset)
         );
     end
@@ -35,7 +35,7 @@
             .config_in(y == 0 ? north_io_config_out[{{ module.width - 1 }}] : east_io_config_out[y - 1]),
             .config_out(east_io_config_out[y]),
             .config_clock(config_clock),
-            .config_enable(config_nreset),
+            .config_enable(config_enable),
             .config_nreset(config_nreset)
         );
     end
@@ -55,7 +55,7 @@
             .config_in(x == 0 ? east_io_config_out[{{ module.height - 1 }}] : north_io_config_out[x - 1]),
             .config_out(south_io_config_out[x]),
             .config_clock(config_clock),
-            .config_enable(config_nreset),
+            .config_enable(config_enable),
             .config_nreset(config_nreset)
         );
     end
@@ -74,7 +74,7 @@
             .config_in(y == 0 ? config_in : west_io_config_out[y - 1]),
             .config_out(west_io_config_out[y]),
             .config_clock(config_clock),
-            .config_enable(config_nreset),
+            .config_enable(config_enable),
             .config_nreset(config_nreset)
         );
     end
@@ -99,10 +99,10 @@
                 .clock(clock),
                 .nreset(nreset),
                 .enable(enable),
-                .config_in(y == 0 ? south_io_config_out[x] : lt_config_out[(y - 1) * {{ module.width }} + x]),
+                .config_in(y == 0 ? south_io_config_out[x] : lt_config_out[y - 1][x]),
                 .config_out(lt_config_out[y][x]),
                 .config_clock(config_clock),
-                .config_enable(config_nreset),
+                .config_enable(config_enable),
                 .config_nreset(config_nreset)
             );
         end
