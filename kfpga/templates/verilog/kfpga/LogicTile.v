@@ -29,7 +29,7 @@
             .clock(clock),
             .nreset(nreset),
             .enable(enable),
-            .config_in(c_les[i])
+            .config_in(c_les{% if module.cluster_size > 1 %}[i]{% endif %})
         );
     end
 {%- endblock  %}

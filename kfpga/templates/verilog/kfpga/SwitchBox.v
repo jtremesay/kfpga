@@ -30,7 +30,7 @@
                 data_from_les
             }),
             .data_out(data_east_out[i]),
-            .config_in(c_muxes_north[i])
+            .config_in(c_muxes_east[i])
         );
     end
 
@@ -74,7 +74,7 @@
                     data_from_les
                 }),
                 .data_out(data_to_les[i * {{ module.lut_size }} + j]),
-                .config_in(c_muxes_les[i][j])
+                .config_in(c_muxes_les[i * {{ module.lut_size}} + j])
             );
         end
     end
