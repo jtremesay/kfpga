@@ -208,7 +208,7 @@ class CoreModule(SequentialModuleMixin, ConfigChainModuleMixin, Module):
         width: int,
         height: int,
         io_pairs_count: int,
-        interconnect_pairs_count: int,
+        ic_pairs_count: int,
         library: Library,
     ) -> None:
         if width < 1:
@@ -222,10 +222,10 @@ class CoreModule(SequentialModuleMixin, ConfigChainModuleMixin, Module):
                 "Minimal IO pairs count is 1, asked: {}".format(io_pairs_count)
             )
 
-        if interconnect_pairs_count < 1:
+        if ic_pairs_count < 1:
             raise ValueError(
                 "Minimal interconnect pairs count is 1, asked: {}".format(
-                    interconnect_pairs_count
+                    ic_pairs_count
                 )
             )
 
@@ -233,7 +233,7 @@ class CoreModule(SequentialModuleMixin, ConfigChainModuleMixin, Module):
         self.width = width
         self.height = height
         self.io_pairs_count = io_pairs_count
-        self.interconnect_pairs_count = interconnect_pairs_count
+        self.ic_pairs_count = ic_pairs_count
 
         self.add_data_input("data_north_in", io_pairs_count * width)
         self.add_data_output("data_north_out", io_pairs_count * width)
