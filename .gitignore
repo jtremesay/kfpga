@@ -1,5 +1,6 @@
 /build/
 /logs/
+/.direnv/
 /venv/
 *.pyc
 /.Xil/
