@@ -1,0 +1,21 @@
+create_clock -period 10.000 -name clock -waveform {0.000 5.000} [get_ports -filter { NAME =~  "clock" && DIRECTION == "IN" }]
+create_clock -period 100.000 -name config_clock -waveform {0.000 50.000} [get_ports -filter { NAME =~  "config_clock" && DIRECTION == "IN" }]
+set_input_delay -clock [get_clocks clock] -min 0.000 [get_ports -filter { NAME =~  "*data_*_in*" && DIRECTION == "IN" }]
+set_input_delay -clock [get_clocks clock] -max 1.000 [get_ports -filter { NAME =~  "*data_*_in*" && DIRECTION == "IN" }]
+set_input_delay -clock [get_clocks clock] -min 0.000 [get_ports -filter { NAME =~  "nreset" && DIRECTION == "IN" }]
+set_input_delay -clock [get_clocks clock] -max 1.000 [get_ports -filter { NAME =~  "nreset" && DIRECTION == "IN" }]
+set_input_delay -clock [get_clocks clock] -min 0.000 [get_ports -filter { NAME =~  "enable" && DIRECTION == "IN" }]
+set_input_delay -clock [get_clocks clock] -max 1.000 [get_ports -filter { NAME =~  "enable" && DIRECTION == "IN" }]
+set_output_delay -clock [get_clocks clock] -min 0.000 [get_ports -filter { NAME =~  "*data_*_out*" && DIRECTION == "OUT" }]
+set_output_delay -clock [get_clocks clock] -max 1.000 [get_ports -filter { NAME =~  "*data_*_out*" && DIRECTION == "OUT" }]
+
+
+set_input_delay -clock [get_clocks config_clock] -min 0.000 [get_ports -filter { NAME =~  "config_in" && DIRECTION == "IN" }]
+set_input_delay -clock [get_clocks config_clock] -max 1.000 [get_ports -filter { NAME =~  "config_in" && DIRECTION == "IN" }]
+set_input_delay -clock [get_clocks config_clock] -min 0.000 [get_ports -filter { NAME =~  "config_nreset" && DIRECTION == "IN" }]
+set_input_delay -clock [get_clocks config_clock] -max 1.000 [get_ports -filter { NAME =~  "config_nreset" && DIRECTION == "IN" }]
+set_input_delay -clock [get_clocks config_clock] -min 0.000 [get_ports -filter { NAME =~  "config_enable" && DIRECTION == "IN" }]
+set_input_delay -clock [get_clocks config_clock] -max 1.000 [get_ports -filter { NAME =~  "config_enable" && DIRECTION == "IN" }]
+set_output_delay -clock [get_clocks config_clock] -min 0.000 [get_ports -filter { NAME =~  "config_out" && DIRECTION == "OUT" }]
+set_output_delay -clock [get_clocks config_clock] -max 1.000 [get_ports -filter { NAME =~  "config_out" && DIRECTION == "OUT" }]
+
