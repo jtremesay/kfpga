@@ -18,11 +18,11 @@ class LvTestExpected:
 
 
 def atpg_lv_test_cases(
-    lv_size: int, lut_size: int
+    vector_size: int, lut_size: int
 ) -> TestCaseGenerator[LvTestData, LvTestExpected]:
     """Generate test cases for a Logic Vector (LV) of a given size."""
     for test_cases in product(
-        atpg_le_test_cases(lut_size), repeat=lv_size
+        atpg_le_test_cases(lut_size), repeat=vector_size
     ):  # Generate all combinations of LE test cases for the LV
         yield (
             LvTestData(
