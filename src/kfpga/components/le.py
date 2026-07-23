@@ -1,46 +1,54 @@
 import logging
+from dataclasses import dataclass
 
+from amaranth.lib.data import StructLayout
 from amaranth.lib.wiring import Component, In, Module, Out, Signal
 
-from .lut import LookUpTable, get_lut_config_size
+from .lut import LookUpTable, LookUpTableConfig, LookUpTableConfigLayout
 
 logger = logging.getLogger(__name__)
 
 
-def get_le_config_size(size: int) -> int:
-    value = get_lut_config_size(size) + 1
-    logger.debug(f"get_le_config_size(size={size}) = {value}")
+@dataclass
+class LogicElementConfig:
+    lut: LookUpTableConfig
+    n_reg: bool
 
-    return value
+
+class LogicElementConfigLayout(StructLayout):
+    def __init__(self, lut_size: int) -> None:
+        self.lut_size = lut_size
+        self.lut_config_layout = LookUpTableConfigLayout(lut_size)
+        super().__init__({"lut": self.lut_config_layout, "n_reg": bool(1)})
 
 
 class LogicElement(Component):
-    def __init__(self, size: int) -> None:
-        self.size = size
-        self.config_size = get_le_config_size(size)
+    def __init__(self, lut_size: int) -> None:
+        self.lut_size = lut_size
+        self.config_layout = LogicElementConfigLayout(lut_size)
 
         super().__init__(
             {
-                "data_in": In(size),
+                "data_in": In(lut_size),
                 "data_out": Out(1),
-                "config": In(self.config_size),
+                "config": In(self.config_layout),
             }
         )
         self.data_in: Signal = self.data_in
         self.data_out: Signal = self.data_out
-        self.config: Signal = self.config
+        self.config = self.config_layout(self.config)
 
     def elaborate(self, platform) -> Module:
         m = Module()
-        m.submodules.lut = lut = LookUpTable(self.size)
+        m.submodules.lut = lut = LookUpTable(self.lut_size)
         lut_data_out_r = Signal()
 
         m.d.comb += [
             lut.data_in.eq(self.data_in),
-            lut.config.eq(self.config[:-1]),
+            lut.config.eq(self.config.lut),
         ]
 
-        with m.If(self.config[-1] == 0):
+        with m.If(self.config.n_reg == 0):
             m.d.comb += self.data_out.eq(lut_data_out_r)
         with m.Else():
             m.d.comb += self.data_out.eq(lut.data_out)

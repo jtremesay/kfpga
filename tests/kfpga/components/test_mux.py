@@ -1,34 +1,25 @@
-from unittest import TestCase
-
-from amaranth.sim import Simulator, SimulatorContext
+import pytest
 
 from kfpga.components.mux import Mux, get_mux_selector_size
+from kfpga.tests.atpg.asserts import assertATPGTestCase
+from kfpga.tests.atpg.mux import atpg_mux_test_cases
 
 
-class MuxTestCase(TestCase):
-    def test_mux(self):
-        for mux_size in [2, 3, 4]:
-            dut = Mux(mux_size)
+@pytest.mark.parametrize("mux_size", [2, 3, 4])
+def test_mux(mux_size: int):
+    dut = Mux(mux_size)
+    assertATPGTestCase(dut, atpg_mux_test_cases(mux_size), clock_period=None)
 
-            async def testbench(ctx: SimulatorContext):
-                for pattern in range(mux_size):
-                    ctx.set(dut.data_in, pattern)
-                    for select in range(mux_size):
-                        ctx.set(dut.select, select)
-                        await ctx.delay(1e-6)
-                        dut_value = ctx.get(dut.data_out)
-                        expected_output = (pattern >> select) & 1
-                        assert dut_value == expected_output, (
-                            f"pattern={pattern}, select={select}, expected={expected_output}, got={dut_value}"
-                        )
 
-            sim = Simulator(dut)
-            sim.add_testbench(testbench)
-            sim.run()
-
-    def test_get_mux_selector_size(self):
-        self.assertEqual(get_mux_selector_size(2), 1)
-        self.assertEqual(get_mux_selector_size(3), 2)
-        self.assertEqual(get_mux_selector_size(4), 2)
-        self.assertEqual(get_mux_selector_size(5), 3)
-        self.assertEqual(get_mux_selector_size(8), 3)
+@pytest.mark.parametrize(
+    "mux_size, expected_selector_size",
+    [
+        (2, 1),
+        (3, 2),
+        (4, 2),
+        (5, 3),
+        (8, 3),
+    ],
+)
+def test_get_mux_selector_size(mux_size: int, expected_selector_size: int):
+    assert get_mux_selector_size(mux_size) == expected_selector_size
