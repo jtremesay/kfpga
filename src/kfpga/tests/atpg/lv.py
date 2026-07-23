@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 from itertools import product
 
-from ...components.le import LogicElementConfig
+from ...components.lv import LogicVectorConfig
 from .base import TestCaseGenerator
 from .le import atpg_le_test_cases
 
 
 @dataclass
 class LvTestData:
-    config: list[LogicElementConfig]
+    config: LogicVectorConfig
     data_in: int
 
 

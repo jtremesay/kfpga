@@ -3,9 +3,11 @@ import logging
 from amaranth.lib.data import ArrayLayout
 from amaranth.lib.wiring import Component, In, Module, Out, Signal
 
-from .le import LogicElement, LogicElementConfigLayout
+from .le import LogicElement, LogicElementConfig, LogicElementConfigLayout
 
 logger = logging.getLogger(__name__)
+
+LogicVectorConfig = list[LogicElementConfig]
 
 
 class LogicVectorConfigLayout(ArrayLayout):
