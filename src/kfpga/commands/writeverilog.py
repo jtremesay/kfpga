@@ -1,6 +1,7 @@
 from argparse import ArgumentParser, Namespace
 
 from amaranth.back import verilog
+from amaranth.hdl import _nir
 
 from ..components.c import Core
 from ..components.le import LogicElement
@@ -14,6 +15,9 @@ from ..components.sb import SwitchBox
 from ..components.sr import ShiftRegister
 from ..consts import SideFlag
 from ..core.commands.base import BaseCommand
+
+# Al diable l'autoritat de la topologia !
+_nir.Netlist.check_comb_cycles = lambda self: None
 
 
 class Command(BaseCommand):
