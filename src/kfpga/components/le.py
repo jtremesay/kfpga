@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 
-from amaranth.lib.data import StructLayout
+from amaranth.lib.data import ArrayLayout, StructLayout, unsigned
 from amaranth.lib.wiring import Component, In, Module, Out, Signal
 
 from .lut import LookUpTable, LookUpTableConfig, LookUpTableConfigLayout
@@ -29,7 +29,7 @@ class LogicElement(Component):
 
         super().__init__(
             {
-                "data_in": In(lut_size),
+                "data_in": In(ArrayLayout(unsigned(1), lut_size)),
                 "data_out": Out(1),
                 "config": In(self.config_layout),
             }
