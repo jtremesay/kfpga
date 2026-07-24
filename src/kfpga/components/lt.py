@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 
-from amaranth.lib.data import StructLayout
+from amaranth.lib.data import ArrayLayout, StructLayout, unsigned
 from amaranth.lib.wiring import Component, In, Module, Out, Signal
 
 from ..consts import SideFlag
@@ -58,18 +58,46 @@ class LogicTile(Component):
 
         super().__init__(
             {
-                "data_north_in": In(io_size if SideFlag.NORTH in io_sides else ic_size),
+                "data_north_in": In(
+                    ArrayLayout(
+                        unsigned(1), io_size if SideFlag.NORTH in io_sides else ic_size
+                    )
+                ),
                 "data_north_out": Out(
-                    io_size if SideFlag.NORTH in io_sides else ic_size
+                    ArrayLayout(
+                        unsigned(1), io_size if SideFlag.NORTH in io_sides else ic_size
+                    )
                 ),
-                "data_east_in": In(io_size if SideFlag.EAST in io_sides else ic_size),
-                "data_east_out": Out(io_size if SideFlag.EAST in io_sides else ic_size),
-                "data_south_in": In(io_size if SideFlag.SOUTH in io_sides else ic_size),
+                "data_east_in": In(
+                    ArrayLayout(
+                        unsigned(1), io_size if SideFlag.EAST in io_sides else ic_size
+                    )
+                ),
+                "data_east_out": Out(
+                    ArrayLayout(
+                        unsigned(1), io_size if SideFlag.EAST in io_sides else ic_size
+                    )
+                ),
+                "data_south_in": In(
+                    ArrayLayout(
+                        unsigned(1), io_size if SideFlag.SOUTH in io_sides else ic_size
+                    )
+                ),
                 "data_south_out": Out(
-                    io_size if SideFlag.SOUTH in io_sides else ic_size
+                    ArrayLayout(
+                        unsigned(1), io_size if SideFlag.SOUTH in io_sides else ic_size
+                    )
                 ),
-                "data_west_in": In(io_size if SideFlag.WEST in io_sides else ic_size),
-                "data_west_out": Out(io_size if SideFlag.WEST in io_sides else ic_size),
+                "data_west_in": In(
+                    ArrayLayout(
+                        unsigned(1), io_size if SideFlag.WEST in io_sides else ic_size
+                    )
+                ),
+                "data_west_out": Out(
+                    ArrayLayout(
+                        unsigned(1), io_size if SideFlag.WEST in io_sides else ic_size
+                    )
+                ),
                 "config": In(self.config_layout),
             }
         )
