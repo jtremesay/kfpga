@@ -93,17 +93,16 @@ class LogicTile(Component):
         )
         m.d.comb += [
             sb.data_north_in.eq(self.data_north_in),
-            sb.data_north_out.eq(self.data_north_out),
+            self.data_north_out.eq(sb.data_north_out),
             sb.data_east_in.eq(self.data_east_in),
-            sb.data_east_out.eq(self.data_east_out),
+            self.data_east_out.eq(sb.data_east_out),
             sb.data_south_in.eq(self.data_south_in),
-            sb.data_south_out.eq(self.data_south_out),
+            self.data_south_out.eq(sb.data_south_out),
             sb.data_west_in.eq(self.data_west_in),
-            sb.data_west_out.eq(self.data_west_out),
+            self.data_west_out.eq(sb.data_west_out),
             sb.data_lv_out.eq(lv.data_out),
-            sb.data_lv_in.eq(lv.data_in),
+            lv.data_in.eq(sb.data_lv_out),
             sb.config.eq(self.config.sb),
-            lv.data_in.eq(sb.data_east_in),
             lv.config.eq(self.config.lv),
         ]
 
