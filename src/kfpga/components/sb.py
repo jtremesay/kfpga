@@ -122,70 +122,74 @@ class SwitchBox(Component):
         south_size = self.io_size if SideFlag.SOUTH in self.io_sides else self.ic_size
         west_size = self.io_size if SideFlag.WEST in self.io_sides else self.ic_size
 
-        north_mux_inputs = east_size + south_size + west_size + self.vector_size
-        east_mux_inputs = south_size + west_size + north_size + self.vector_size
-        south_mux_inputs = west_size + north_size + east_size + self.vector_size
-        west_mux_inputs = north_size + east_size + south_size + self.vector_size
-        lv_mux_inputs = (
-            north_size + east_size + south_size + west_size + self.vector_size
+        north_mux_inputs = Cat(
+            self.data_east_in,
+            self.data_south_in,
+            self.data_west_in,
+            self.data_lv_out,
+        )
+        east_mux_inputs = Cat(
+            self.data_south_in,
+            self.data_west_in,
+            self.data_north_in,
+            self.data_lv_out,
+        )
+        south_mux_inputs = Cat(
+            self.data_west_in,
+            self.data_north_in,
+            self.data_east_in,
+            self.data_lv_out,
+        )
+        west_mux_inputs = Cat(
+            self.data_north_in,
+            self.data_east_in,
+            self.data_south_in,
+            self.data_lv_out,
+        )
+        lv_mux_inputs = Cat(
+            self.data_north_in,
+            self.data_east_in,
+            self.data_south_in,
+            self.data_west_in,
+            self.data_lv_out,
         )
 
-        m.submodules.north_muxes = north_muxes = MuxMXN(north_mux_inputs, north_size)
-        m.submodules.east_muxes = east_muxes = MuxMXN(east_mux_inputs, east_size)
-        m.submodules.south_muxes = south_muxes = MuxMXN(south_mux_inputs, south_size)
-        m.submodules.west_muxes = west_muxes = MuxMXN(west_mux_inputs, west_size)
-        m.submodules.lv_muxes = lv_muxes = MuxMXN(lv_mux_inputs, self.vector_size)
+        north_mux_inputs_size = len(north_mux_inputs)
+        east_mux_inputs_size = len(east_mux_inputs)
+        south_mux_inputs_size = len(south_mux_inputs)
+        west_mux_inputs_size = len(west_mux_inputs)
+        lv_mux_inputs_size = len(lv_mux_inputs)
+
+        m.submodules.north_muxes = north_muxes = MuxMXN(
+            north_mux_inputs_size, north_size
+        )
+        m.submodules.east_muxes = east_muxes = MuxMXN(east_mux_inputs_size, east_size)
+        m.submodules.south_muxes = south_muxes = MuxMXN(
+            south_mux_inputs_size, south_size
+        )
+        m.submodules.west_muxes = west_muxes = MuxMXN(west_mux_inputs_size, west_size)
+        m.submodules.lv_muxes = lv_muxes = MuxMXN(lv_mux_inputs_size, self.vector_size)
         m.d.comb += [
-            north_muxes.data_in.eq(
-                Cat(
-                    self.data_east_out,
-                    self.data_south_out,
-                    self.data_west_out,
-                    self.data_lv_out,
-                )
-            ),
+            # North
+            north_muxes.data_in.eq(north_mux_inputs),
+            self.data_north_out.eq(north_muxes.data_out),
             north_muxes.select.eq(self.config.north_muxes),
-            self.data_north_in.eq(north_muxes.data_out),
-            east_muxes.data_in.eq(
-                Cat(
-                    self.data_south_out,
-                    self.data_west_out,
-                    self.data_north_out,
-                    self.data_lv_out,
-                )
-            ),
+            # East
+            east_muxes.data_in.eq(east_mux_inputs),
+            self.data_east_out.eq(east_muxes.data_out),
             east_muxes.select.eq(self.config.east_muxes),
-            self.data_east_in.eq(east_muxes.data_out),
-            south_muxes.data_in.eq(
-                Cat(
-                    self.data_west_out,
-                    self.data_north_out,
-                    self.data_east_out,
-                    self.data_lv_out,
-                )
-            ),
+            # South
+            south_muxes.data_in.eq(south_mux_inputs),
+            self.data_south_out.eq(south_muxes.data_out),
             south_muxes.select.eq(self.config.south_muxes),
-            self.data_south_in.eq(south_muxes.data_out),
-            west_muxes.data_in.eq(
-                Cat(
-                    self.data_north_out,
-                    self.data_east_out,
-                    self.data_south_out,
-                    self.data_lv_out,
-                )
-            ),
+            # West
+            west_muxes.data_in.eq(west_mux_inputs),
+            self.data_west_out.eq(west_muxes.data_out),
             west_muxes.select.eq(self.config.west_muxes),
-            self.data_west_in.eq(west_muxes.data_out),
-            lv_muxes.data_in.eq(
-                Cat(
-                    self.data_north_out,
-                    self.data_east_out,
-                    self.data_south_out,
-                    self.data_west_out,
-                )
-            ),
-            lv_muxes.select.eq(self.config.lv_muxes),
+            # LV
+            lv_muxes.data_in.eq(lv_mux_inputs),
             self.data_lv_in.eq(lv_muxes.data_out),
+            lv_muxes.select.eq(self.config.lv_muxes),
         ]
 
         return m
