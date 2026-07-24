@@ -1,11 +1,7 @@
-import logging
-
 from amaranth.lib.data import ArrayLayout, unsigned
 from amaranth.lib.wiring import Component, In, Module, Out, Signal
 
 from .le import LogicElement, LogicElementConfig, LogicElementConfigLayout
-
-logger = logging.getLogger(__name__)
 
 LogicVectorConfig = list[LogicElementConfig]
 

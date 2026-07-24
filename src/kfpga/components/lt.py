@@ -1,4 +1,3 @@
-import logging
 from dataclasses import dataclass
 
 from amaranth.lib.data import ArrayLayout, StructLayout, unsigned
@@ -7,8 +6,6 @@ from amaranth.lib.wiring import Component, In, Module, Out, Signal
 from ..consts import SideFlag
 from .lv import LogicVector, LogicVectorConfig, LogicVectorConfigLayout
 from .sb import SwitchBox, SwitchBoxConfig, SwitchBoxConfigLayout
-
-logger = logging.getLogger(__name__)
 
 
 @dataclass

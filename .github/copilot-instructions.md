@@ -39,7 +39,6 @@ components (see [lut.py](../src/kfpga/components/lut.py) or [le.py](../src/kfpga
 3. A `Component` subclass (from `amaranth.lib.wiring`) whose signature uses
    `In(...)`/`Out(...)` for `data_in`/`data_out`/`config`, and implements
    `elaborate(self, platform) -> Module`.
-4. A module-level `logger = logging.getLogger(__name__)`.
 
 ## Testing
 

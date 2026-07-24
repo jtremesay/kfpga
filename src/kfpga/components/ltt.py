@@ -1,13 +1,9 @@
-import logging
-
 from amaranth.lib.data import ArrayLayout, unsigned
 from amaranth.lib.wiring import Component, In, Module, Out, Signal
 
 from ..consts import SideFlag
 from .lt import LogicTile
 from .sr import ShiftRegister
-
-logger = logging.getLogger(__name__)
 
 
 class LogicTileTop(Component):
