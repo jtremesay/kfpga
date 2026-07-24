@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 
-from amaranth.lib.data import StructLayout, unsigned
+from amaranth.lib.data import ArrayLayout, StructLayout, unsigned
 from amaranth.lib.wiring import Component, In, Module, Out, Signal
 
 from .mux import Mux
@@ -20,13 +20,13 @@ class LookUpTableConfigLayout(StructLayout):
 
 
 class LookUpTable(Component):
-    def __init__(self, size: int) -> None:
-        self.size = size
-        self.config_layout = LookUpTableConfigLayout(size)
+    def __init__(self, lut_size: int) -> None:
+        self.lut_size = lut_size
+        self.config_layout = LookUpTableConfigLayout(lut_size)
 
         super().__init__(
             {
-                "data_in": In(description=size),
+                "data_in": In(ArrayLayout(unsigned(1), lut_size)),
                 "data_out": Out(1),
                 "config": In(self.config_layout),
             }
@@ -38,7 +38,7 @@ class LookUpTable(Component):
     def elaborate(self, platform) -> Module:
         m = Module()
 
-        m.submodules.mux = mux = Mux(self.size)
+        m.submodules.mux = mux = Mux(self.lut_size)
         m.d.comb += [
             mux.data_in.eq(self.config.truth_table),
             mux.select.eq(self.data_in),
