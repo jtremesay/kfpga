@@ -38,7 +38,7 @@ class LookUpTable(Component):
     def elaborate(self, platform) -> Module:
         m = Module()
 
-        m.submodules.mux = mux = Mux(self.lut_size)
+        m.submodules.mux = mux = Mux(2**self.lut_size)
         m.d.comb += [
             mux.data_in.eq(self.config.truth_table),
             mux.select.eq(self.data_in),

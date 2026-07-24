@@ -1,10 +1,36 @@
+import dataclasses
 from typing import Optional
 
+from amaranth.lib.data import ArrayLayout, Const as DataConst
 from amaranth.lib.wiring import Component
 from amaranth.sim import SimulatorContext
 
 from ..asserts import assertTestBench
 from .base import TestCaseGenerator, TestDataT, TestExpectedT
+
+
+def _prepare_value(dut_field, value):
+    """Convert value to a form accepted by ctx.set()."""
+    if dataclasses.is_dataclass(value) and not isinstance(value, type):
+        return dataclasses.asdict(value)
+    if isinstance(value, list):
+        return [
+            dataclasses.asdict(v) if (dataclasses.is_dataclass(v) and not isinstance(v, type)) else v
+            for v in value
+        ]
+    if isinstance(value, int) and isinstance(dut_field.shape(), ArrayLayout):
+        shape = dut_field.shape()
+        inner_shape = shape.elem_shape
+        inner_size = inner_shape.size if isinstance(inner_shape, ArrayLayout) else inner_shape.width
+        if inner_size == 1:
+            return [(value >> i) & 1 for i in range(shape.length)]
+        else:
+            inner_mask = (1 << inner_size) - 1
+            return [
+                [(((value >> (i * inner_size)) & inner_mask) >> j) & 1 for j in range(inner_size)]
+                for i in range(shape.length)
+            ]
+    return value
 
 
 async def assertTestCase(
@@ -16,7 +42,7 @@ async def assertTestCase(
     print(test_inputs, test_expected)
     for field in test_inputs.__dataclass_fields__:
         dut_field = getattr(dut, field)
-        test_input_value = getattr(test_inputs, field)
+        test_input_value = _prepare_value(dut_field, getattr(test_inputs, field))
         ctx.set(dut_field, test_input_value)
 
     try:
@@ -27,7 +53,8 @@ async def assertTestCase(
     # Check expected output values
     for field in test_expected.__dataclass_fields__:
         expected_value = getattr(test_expected, field)
-        actual_value = ctx.get(getattr(dut, field))
+        raw_value = ctx.get(getattr(dut, field))
+        actual_value = raw_value.as_bits() if isinstance(raw_value, DataConst) else raw_value
         assert actual_value == expected_value, (
             f"Expected {field}={expected_value}, but got {actual_value}"
         )

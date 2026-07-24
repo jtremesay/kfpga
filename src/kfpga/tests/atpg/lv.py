@@ -28,7 +28,7 @@ def atpg_lv_test_cases(
             LvTestData(
                 config=[le_inputs.config for le_inputs, _ in test_cases],
                 data_in=sum(
-                    le_inputs.data_in << i
+                    le_inputs.data_in << (i * lut_size)
                     for i, (le_inputs, _) in enumerate(test_cases)
                 ),
             ),
