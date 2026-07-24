@@ -80,12 +80,14 @@ class Command(BaseCommand):
         parser.add_argument(
             "-s",
             "--side",
-            type=SideFlag,
-            default=SideFlag.NONE,
+            type=int,
+            default=SideFlag.NORTH | SideFlag.EAST,
             help="Side of the tile.",
         )
 
     def run(self, args: Namespace) -> None:
+        args.side = SideFlag(args.side)
+
         match args.module:
             case "mux":
                 dut = Mux(

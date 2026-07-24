@@ -1,9 +1,9 @@
-from enum import Flag, auto
+from enum import IntFlag
 
 
-class SideFlag(Flag):
+class SideFlag(IntFlag):
     NONE = 0
-    NORTH = auto()
-    EAST = auto()
-    SOUTH = auto()
-    WEST = auto()
+    NORTH = 1
+    EAST = 2
+    SOUTH = 4
+    WEST = 8
