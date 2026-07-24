@@ -1,6 +1,6 @@
 import logging
 
-from amaranth.lib.data import ArrayLayout
+from amaranth.lib.data import ArrayLayout, unsigned
 from amaranth.lib.wiring import Component, In, Module, Out, Signal
 
 from .le import LogicElement, LogicElementConfig, LogicElementConfigLayout
@@ -26,8 +26,10 @@ class LogicVector(Component):
 
         super().__init__(
             {
-                "data_in": In(vector_size * lut_size),
-                "data_out": Out(vector_size),
+                "data_in": In(
+                    ArrayLayout(ArrayLayout(unsigned(1), lut_size), vector_size)
+                ),
+                "data_out": Out(ArrayLayout(unsigned(1), vector_size)),
                 "config": In(self.config_layout),
             }
         )
@@ -41,9 +43,7 @@ class LogicVector(Component):
         for i in range(self.vector_size):
             m.submodules[f"le_{i}"] = le = LogicElement(self.lut_size)
             m.d.comb += [
-                le.data_in.eq(
-                    self.data_in[i * self.lut_size : (i + 1) * self.lut_size]
-                ),
+                le.data_in.eq(self.data_in[i]),
                 le.config.eq(self.config[i]),
                 self.data_out[i].eq(le.data_out),
             ]
