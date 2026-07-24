@@ -1,10 +1,11 @@
 import logging
 from dataclasses import dataclass
 
-from amaranth.lib.data import StructLayout
+from amaranth.lib.data import ArrayLayout, StructLayout, unsigned
 from amaranth.lib.wiring import Component, In, Module, Out, Signal
 
 from ..consts import SideFlag
+from .mux import get_mux_selector_size
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +29,70 @@ class SwitchBoxConfigLayout(StructLayout):
         self.io_sides = io_sides
         self.vector_size = vector_size
         self.lut_size = lut_size
-        super().__init__({})
+
+        north_size = io_size if SideFlag.NORTH in io_sides else ic_size
+        east_size = io_size if SideFlag.EAST in io_sides else ic_size
+        south_size = io_size if SideFlag.SOUTH in io_sides else ic_size
+        west_size = io_size if SideFlag.WEST in io_sides else ic_size
+
+        north_mux_inputs = east_size + south_size + west_size + vector_size
+        east_mux_inputs = south_size + west_size + north_size + vector_size
+        south_mux_inputs = west_size + north_size + east_size + vector_size
+        west_mux_inputs = north_size + east_size + south_size + vector_size
+        lv_mux_inputs = north_size + east_size + south_size + west_size + vector_size
+
+        super().__init__(
+            {
+                "north_muxes": ArrayLayout(
+                    StructLayout(
+                        {
+                            "selector": unsigned(
+                                get_mux_selector_size(north_mux_inputs)
+                            ),
+                        }
+                    ),
+                    north_size,
+                ),
+                "east_muxes": ArrayLayout(
+                    StructLayout(
+                        {
+                            "selector": unsigned(
+                                get_mux_selector_size(east_mux_inputs)
+                            ),
+                        }
+                    ),
+                    east_size,
+                ),
+                "south_muxes": ArrayLayout(
+                    StructLayout(
+                        {
+                            "selector": unsigned(
+                                get_mux_selector_size(south_mux_inputs)
+                            ),
+                        }
+                    ),
+                    south_size,
+                ),
+                "west_muxes": ArrayLayout(
+                    StructLayout(
+                        {
+                            "selector": unsigned(
+                                get_mux_selector_size(west_mux_inputs)
+                            ),
+                        }
+                    ),
+                    west_size,
+                ),
+                "lv_muxes": ArrayLayout(
+                    StructLayout(
+                        {
+                            "selector": unsigned(get_mux_selector_size(lv_mux_inputs)),
+                        }
+                    ),
+                    self.vector_size * self.lut_size,
+                ),
+            }
+        )
 
 
 class SwitchBox(Component):
@@ -49,25 +113,27 @@ class SwitchBox(Component):
             io_size, ic_size, io_sides, vector_size, lut_size
         )
 
-        super().__init__(
-            {
-                "data_north_in": In(io_size if SideFlag.NORTH in io_sides else ic_size),
-                "data_north_out": Out(
-                    io_size if SideFlag.NORTH in io_sides else ic_size
-                ),
-                "data_east_in": In(io_size if SideFlag.EAST in io_sides else ic_size),
-                "data_east_out": Out(io_size if SideFlag.EAST in io_sides else ic_size),
-                "data_south_in": In(io_size if SideFlag.SOUTH in io_sides else ic_size),
-                "data_south_out": Out(
-                    io_size if SideFlag.SOUTH in io_sides else ic_size
-                ),
-                "data_west_in": In(io_size if SideFlag.WEST in io_sides else ic_size),
-                "data_west_out": Out(io_size if SideFlag.WEST in io_sides else ic_size),
-                "data_lv_in": Out(vector_size * lut_size),
-                "data_lv_out": In(vector_size),
-                "config": In(self.config_layout),
+        signature = {}
+        for side_str, side_flag in [
+            ("north", SideFlag.NORTH),
+            ("east", SideFlag.EAST),
+            ("south", SideFlag.SOUTH),
+            ("west", SideFlag.WEST),
+        ]:
+            size = io_size if side_flag in io_sides else ic_size
+            signature |= {
+                f"data_{side_str}_in": In(ArrayLayout(unsigned(1), size)),
+                f"data_{side_str}_out": Out(ArrayLayout(unsigned(1), size)),
             }
-        )
+        signature |= {
+            "data_lv_in": Out(
+                ArrayLayout(ArrayLayout(unsigned(1), lut_size), vector_size)
+            ),
+            "data_lv_out": In(ArrayLayout(unsigned(1), vector_size)),
+            "config": In(self.config_layout),
+        }
+
+        super().__init__(signature)
         self.data_north_in: Signal = self.data_north_in
         self.data_north_out: Signal = self.data_north_out
         self.data_east_in: Signal = self.data_east_in

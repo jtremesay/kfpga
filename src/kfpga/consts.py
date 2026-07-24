@@ -53,6 +53,7 @@ class Side(StrEnum):
 
 
 class SideFlag(Flag):
+    NONE = 0
     NORTH = auto()
     EAST = auto()
     SOUTH = auto()

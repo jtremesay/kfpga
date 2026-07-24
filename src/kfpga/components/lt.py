@@ -56,51 +56,23 @@ class LogicTile(Component):
             io_size, ic_size, io_sides, vector_size, lut_size
         )
 
-        super().__init__(
-            {
-                "data_north_in": In(
-                    ArrayLayout(
-                        unsigned(1), io_size if SideFlag.NORTH in io_sides else ic_size
-                    )
-                ),
-                "data_north_out": Out(
-                    ArrayLayout(
-                        unsigned(1), io_size if SideFlag.NORTH in io_sides else ic_size
-                    )
-                ),
-                "data_east_in": In(
-                    ArrayLayout(
-                        unsigned(1), io_size if SideFlag.EAST in io_sides else ic_size
-                    )
-                ),
-                "data_east_out": Out(
-                    ArrayLayout(
-                        unsigned(1), io_size if SideFlag.EAST in io_sides else ic_size
-                    )
-                ),
-                "data_south_in": In(
-                    ArrayLayout(
-                        unsigned(1), io_size if SideFlag.SOUTH in io_sides else ic_size
-                    )
-                ),
-                "data_south_out": Out(
-                    ArrayLayout(
-                        unsigned(1), io_size if SideFlag.SOUTH in io_sides else ic_size
-                    )
-                ),
-                "data_west_in": In(
-                    ArrayLayout(
-                        unsigned(1), io_size if SideFlag.WEST in io_sides else ic_size
-                    )
-                ),
-                "data_west_out": Out(
-                    ArrayLayout(
-                        unsigned(1), io_size if SideFlag.WEST in io_sides else ic_size
-                    )
-                ),
-                "config": In(self.config_layout),
+        signature = {}
+        for side_str, side_flag in [
+            ("north", SideFlag.NORTH),
+            ("east", SideFlag.EAST),
+            ("south", SideFlag.SOUTH),
+            ("west", SideFlag.WEST),
+        ]:
+            size = io_size if side_flag in io_sides else ic_size
+            signature |= {
+                f"data_{side_str}_in": In(ArrayLayout(unsigned(1), size)),
+                f"data_{side_str}_out": Out(ArrayLayout(unsigned(1), size)),
             }
-        )
+        signature |= {
+            "config": In(self.config_layout),
+        }
+
+        super().__init__(signature)
         self.data_north_in: Signal = self.data_north_in
         self.data_north_out: Signal = self.data_north_out
         self.data_east_in: Signal = self.data_east_in
