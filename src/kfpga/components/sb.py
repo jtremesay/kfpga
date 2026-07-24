@@ -1,11 +1,12 @@
 import logging
 from dataclasses import dataclass
 
+from amaranth import Cat
 from amaranth.lib.data import ArrayLayout, StructLayout, unsigned
 from amaranth.lib.wiring import Component, In, Module, Out, Signal
 
 from ..consts import SideFlag
-from .mux import get_mux_selector_size
+from .mux_mxn import MuxMXN, get_mux_mxn_selector_size
 
 logger = logging.getLogger(__name__)
 
@@ -43,53 +44,20 @@ class SwitchBoxConfigLayout(StructLayout):
 
         super().__init__(
             {
-                "north_muxes": ArrayLayout(
-                    StructLayout(
-                        {
-                            "selector": unsigned(
-                                get_mux_selector_size(north_mux_inputs)
-                            ),
-                        }
-                    ),
-                    north_size,
+                "north_muxes": unsigned(
+                    get_mux_mxn_selector_size(north_mux_inputs, north_size)
                 ),
-                "east_muxes": ArrayLayout(
-                    StructLayout(
-                        {
-                            "selector": unsigned(
-                                get_mux_selector_size(east_mux_inputs)
-                            ),
-                        }
-                    ),
-                    east_size,
+                "east_muxes": unsigned(
+                    get_mux_mxn_selector_size(east_mux_inputs, east_size)
                 ),
-                "south_muxes": ArrayLayout(
-                    StructLayout(
-                        {
-                            "selector": unsigned(
-                                get_mux_selector_size(south_mux_inputs)
-                            ),
-                        }
-                    ),
-                    south_size,
+                "south_muxes": unsigned(
+                    get_mux_mxn_selector_size(south_mux_inputs, south_size)
                 ),
-                "west_muxes": ArrayLayout(
-                    StructLayout(
-                        {
-                            "selector": unsigned(
-                                get_mux_selector_size(west_mux_inputs)
-                            ),
-                        }
-                    ),
-                    west_size,
+                "west_muxes": unsigned(
+                    get_mux_mxn_selector_size(west_mux_inputs, west_size)
                 ),
-                "lv_muxes": ArrayLayout(
-                    StructLayout(
-                        {
-                            "selector": unsigned(get_mux_selector_size(lv_mux_inputs)),
-                        }
-                    ),
-                    self.vector_size * self.lut_size,
+                "lv_muxes": unsigned(
+                    get_mux_mxn_selector_size(lv_mux_inputs, vector_size)
                 ),
             }
         )
@@ -148,5 +116,76 @@ class SwitchBox(Component):
 
     def elaborate(self, platform) -> Module:
         m = Module()
+
+        north_size = self.io_size if SideFlag.NORTH in self.io_sides else self.ic_size
+        east_size = self.io_size if SideFlag.EAST in self.io_sides else self.ic_size
+        south_size = self.io_size if SideFlag.SOUTH in self.io_sides else self.ic_size
+        west_size = self.io_size if SideFlag.WEST in self.io_sides else self.ic_size
+
+        north_mux_inputs = east_size + south_size + west_size + self.vector_size
+        east_mux_inputs = south_size + west_size + north_size + self.vector_size
+        south_mux_inputs = west_size + north_size + east_size + self.vector_size
+        west_mux_inputs = north_size + east_size + south_size + self.vector_size
+        lv_mux_inputs = (
+            north_size + east_size + south_size + west_size + self.vector_size
+        )
+
+        m.submodules.north_muxes = north_muxes = MuxMXN(north_mux_inputs, north_size)
+        m.submodules.east_muxes = east_muxes = MuxMXN(east_mux_inputs, east_size)
+        m.submodules.south_muxes = south_muxes = MuxMXN(south_mux_inputs, south_size)
+        m.submodules.west_muxes = west_muxes = MuxMXN(west_mux_inputs, west_size)
+        m.submodules.lv_muxes = lv_muxes = MuxMXN(lv_mux_inputs, self.vector_size)
+        m.d.comb += [
+            north_muxes.data_in.eq(
+                Cat(
+                    self.data_east_out,
+                    self.data_south_out,
+                    self.data_west_out,
+                    self.data_lv_out,
+                )
+            ),
+            north_muxes.select.eq(self.config.north_muxes),
+            self.data_north_in.eq(north_muxes.data_out),
+            east_muxes.data_in.eq(
+                Cat(
+                    self.data_south_out,
+                    self.data_west_out,
+                    self.data_north_out,
+                    self.data_lv_out,
+                )
+            ),
+            east_muxes.select.eq(self.config.east_muxes),
+            self.data_east_in.eq(east_muxes.data_out),
+            south_muxes.data_in.eq(
+                Cat(
+                    self.data_west_out,
+                    self.data_north_out,
+                    self.data_east_out,
+                    self.data_lv_out,
+                )
+            ),
+            south_muxes.select.eq(self.config.south_muxes),
+            self.data_south_in.eq(south_muxes.data_out),
+            west_muxes.data_in.eq(
+                Cat(
+                    self.data_north_out,
+                    self.data_east_out,
+                    self.data_south_out,
+                    self.data_lv_out,
+                )
+            ),
+            west_muxes.select.eq(self.config.west_muxes),
+            self.data_west_in.eq(west_muxes.data_out),
+            lv_muxes.data_in.eq(
+                Cat(
+                    self.data_north_out,
+                    self.data_east_out,
+                    self.data_south_out,
+                    self.data_west_out,
+                )
+            ),
+            lv_muxes.select.eq(self.config.lv_muxes),
+            self.data_lv_in.eq(lv_muxes.data_out),
+        ]
 
         return m
