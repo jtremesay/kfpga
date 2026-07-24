@@ -2,7 +2,7 @@ import logging
 from dataclasses import dataclass
 
 from amaranth.lib.data import StructLayout
-from amaranth.lib.wiring import Component, In, Out, Signal
+from amaranth.lib.wiring import Component, In, Module, Out, Signal
 
 from ..consts import SideFlag
 
@@ -79,3 +79,8 @@ class SwitchBox(Component):
         self.data_lv_in: Signal = self.data_lv_in
         self.data_lv_out: Signal = self.data_lv_out
         self.config = self.config_layout(self.config)
+
+    def elaborate(self, platform) -> Module:
+        m = Module()
+
+        return m
