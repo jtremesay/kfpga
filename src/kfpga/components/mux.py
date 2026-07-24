@@ -1,6 +1,7 @@
 import logging
 import math
 
+from amaranth.lib.data import ArrayLayout, unsigned
 from amaranth.lib.wiring import Component, In, Module, Out, Signal
 
 logger = logging.getLogger(__name__)
@@ -20,8 +21,8 @@ class Mux(Component):
 
         super().__init__(
             {
-                "data_in": In(size),
-                "data_out": Out(size),
+                "data_in": In(ArrayLayout(unsigned(1), size)),
+                "data_out": Out(1),
                 "select": In(self.select_size),
             }
         )
@@ -31,6 +32,6 @@ class Mux(Component):
 
     def elaborate(self, platform) -> Module:
         m = Module()
-        m.d.comb += self.data_out.eq(self.data_in.bit_select(self.select, 1))
+        m.d.comb += self.data_out.eq(self.data_in[self.select])
 
         return m
