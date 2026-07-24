@@ -7,17 +7,17 @@ from ..asserts import assertTestBench
 from .base import TestCaseGenerator, TestDataT, TestExpectedT
 
 
-async def assertTestCase[TestDataT, TestExpectedT](
+async def assertTestCase(
     dut: Component, ctx: SimulatorContext, test_case: tuple[TestDataT, TestExpectedT]
 ):
-    return
+    test_inputs, test_expected = test_case
 
     # Assign input values
-    for field in test_case.input.__dataclass_fields__:
-        try:
-            ctx.set(getattr(dut, field), getattr(test_case.input, field))
-        except Exception as e:
-            raise ValueError(getattr(test_case.input, field)) from e
+    print(test_inputs, test_expected)
+    for field in test_inputs.__dataclass_fields__:
+        dut_field = getattr(dut, field)
+        test_input_value = getattr(test_inputs, field)
+        ctx.set(dut_field, test_input_value)
 
     try:
         await ctx.tick()
@@ -25,8 +25,8 @@ async def assertTestCase[TestDataT, TestExpectedT](
         await ctx.delay(1.0e-6)  # Allow for combinational logic to settle
 
     # Check expected output values
-    for field in test_case.expected.__dataclass_fields__:
-        expected_value = getattr(test_case.expected, field)
+    for field in test_expected.__dataclass_fields__:
+        expected_value = getattr(test_expected, field)
         actual_value = ctx.get(getattr(dut, field))
         assert actual_value == expected_value, (
             f"Expected {field}={expected_value}, but got {actual_value}"
